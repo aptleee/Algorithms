@@ -1,4 +1,4 @@
-package queue
+package queuev2
 
 import "fmt"
 
@@ -10,6 +10,7 @@ type node struct {
 
 type Queue struct {
 	head, tail *node
+	count int
 }
 
 func New() Queue {
@@ -24,21 +25,28 @@ func (q *Queue) Enqueue(v interface{}) {
 		q.tail.next = n
 		q.tail = n
 	}
+	q.count++
 }
 
 func (q *Queue) Dequeue() interface{}{
 	if q.head == q.tail {
 		v := q.head.val
 		q.head, q.tail = nil, nil
+		q.count--
 		return v
 	}
 	v := q.head.val
 	q.head = q.head.next
+	q.count--
 	return v
 }
 
 func (q *Queue) Empty() bool {
 	return q.head == nil
+}
+
+func (q *Queue) Len() int {
+	return q.count
 }
 
 func main() {

@@ -10,7 +10,7 @@ type Q struct {
 	N     int
 }
 
-func NewQ(size int) Q {
+func New(size int) Q {
 	return Q{
 		array: make([]int, size),
 		size:  size,
@@ -53,7 +53,7 @@ func (q *Q) Empty() bool {
 }
 
 func main() {
-	q := NewQ(5)
+	q := New(5)
 	fmt.Println(q.Empty())
 	for i := 0; i < 5; i++ {
 		q.enqueue(i)
