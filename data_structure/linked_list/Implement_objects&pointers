@@ -1,0 +1,69 @@
+1. A multiple-array representation of objects
+for instance, use three arrays to represent a linked list
+key = [10]int
+next = [10]int
+prev = [10]int
+
+use a variable L to hold the index of the head of the list
+var L = 5 the index of head, which means prev[5] = -1
+
+2. A single-array representation of objects
+in many programming languages, an object occupies a contiguous
+set of locations in the computer memory.
+a pointer is simply the first memory location of the object
+
+A[0 ..M)
+for one object A[j ..k]
+a pointer to the obejct is the index j
+offset: key, next, prev: 0, 1, 2
+which means A[j] is value of key, A[j+1] is value of next, A[j+2] is prev
+
+allocating and freeing objects
+free list, singly linked list, use the "next" array
+garbage collector
+
+length m,
+at some moment the dynamic set contains n <= m elements
+so m-n elements are free
+
+the free objects are available to represent elements inserted into the dynamic set in the future.
+
+the head of the free list is held in the global variable free.
+
+Note that each object in the representation is either in list L or in the free list,
+but not in both.
+
+work like a stack, the next object allocated is the last one freed
+
+Allocate-object()
+    if free == nil:
+        error "out of space"
+    else:
+        x = free
+        free = x.next
+        return x
+
+Free-object(x)
+    x.next = free
+    free = x
+
+
+Single-array representation
+
+Allocate-object()
+    if free == nil {
+        error "out of space"
+    } else {
+        x = free
+        free = A[x+1]
+        return x
+    }
+
+Free-object(x)
+    A[x+1] = free
+    free = x
+
+
+
+
+
