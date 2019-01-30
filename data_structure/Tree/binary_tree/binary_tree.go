@@ -4,6 +4,8 @@ import (
 	"AlgorithmsGo-master/data_structure/queue/queuev2"
 	"AlgorithmsGo-master/data_structure/stack/stackv2"
 	"fmt"
+	"strconv"
+	"strings"
 )
 
 
@@ -61,13 +63,12 @@ func (t Tree) Depth() int {
 	return calDepth(t.root)
 }
 
-func InOrder(root *TreeNode) {
-	if root == nil {
-		return
+func InOrder(root *TreeNode, res *[]int) {
+	if root != nil {
+		InOrder(root.Left, res)
+		*res = append(*res, root.Val)
+		InOrder(root.Right, res)
 	}
-	InOrder(root.Left)
-	fmt.Print(root.Val, " ")
-	InOrder(root.Right)
 }
 
 func InOderv2(root *TreeNode) {
@@ -78,8 +79,7 @@ func InOderv2(root *TreeNode) {
 			st.Push(cur)
 			cur = cur.Left
 		}
-		a := st.Top().(*TreeNode)
-		st.Pop()
+		a := st.Pop().(*TreeNode)
 		fmt.Print(a.Val, " ")
 		cur = a.Right
 	}
@@ -87,13 +87,14 @@ func InOderv2(root *TreeNode) {
 
 
 func PreOrder(root *TreeNode) {
-	if root == nil {
-		return
+	if root != nil {
+		fmt.Print(root.Val, " ")
+		PreOrder(root.Left)
+		PreOrder(root.Right)
 	}
-	fmt.Print(root.Val, " ")
-	PreOrder(root.Left)
-	PreOrder(root.Right)
+
 }
+
 
 func PreOrderv2(root *TreeNode) {
 	st := stackv2.New()
@@ -104,23 +105,40 @@ func PreOrderv2(root *TreeNode) {
 			st.Push(cur)
 			cur = cur.Left
 		}
-		a := st.Top().(*TreeNode)
-		st.Pop()
+		a := st.Pop().(*TreeNode)
 		cur = a.Right
 	}
 }
 
-//func PostOrderv2(root *TreeNode) {
-//
-//}
+func PostOrderv2(root *TreeNode) []int{
+	ret := []int{}
+	st := stackv2.New()
+	cur := root
+	if cur == nil {
+		return ret
+	}
+	st.Push(root)
+	for st.Empty() == false {
+		r := st.Pop().(*TreeNode)
+		ret = append(ret, r.Val)
+		if r.Left != nil {
+			st.Push(r.Left)
+		}
+		if r.Right != nil {
+			st.Push(r.Right)
+		}
+	}
+	Reverse(ret)
+	return ret
+}
 
 func PostOrder(root *TreeNode) {
-	if root == nil {
-		return
+	if root != nil {
+		PostOrder(root.Left)
+		PostOrder(root.Right)
+		fmt.Print(root.Val, " ")
 	}
-	PostOrder(root.Left)
-	PostOrder(root.Right)
-	fmt.Print(root.Val, " ")
+
 }
 
 func LevelOrder(root *TreeNode) {
@@ -310,26 +328,66 @@ func Invertv2(root *TreeNode) *TreeNode {
 	return root
 }
 
-func Construct(A []int) *TreeNode {
-
+//func Construct(A []int) []*TreeNode {
+//
+//}
+//
+func Serialize(root *TreeNode) string { // preorder
+	s := ""
+	sh(root, &s)
+	return s
 }
 
-func Serialize(root *TreeNode) string {
+func sh(root *TreeNode, s *string) {
+	if root == nil {
+		*s += "# "
+	} else {
+		*s = *s + strconv.Itoa(root.Val) + " "
+		sh(root.Left, s)
+		sh(root.Right, s)
+	}
+}
+func Deserialize(s string) *TreeNode {
+	q := queuev2.New()
+	a := strings.Split(s, " ")
+	for _, e := range a {
+		q.Enqueue(e)
+	}
 
+	return dh(q)
 }
 
-func Deserialize(string) *TreeNode {
-
+func dh(q *queuev2.Queue) *TreeNode {
+	a := q.Dequeue().(string)
+	if a == "#" {
+		return nil
+	}
+	t,_ := strconv.Atoi(a)
+	root := NewNode(t)
+	root.Left = dh(q)
+	root.Right = dh(q)
+	return root
 }
+
+//func Serializev2(root *TreeNode) string { // levelorder
+//
+//}
+//
 
 func Copy(root *TreeNode) *TreeNode{
-
+	if root == nil {
+		return nil
+	}
+	r2 := NewNode(root.Val)
+	r2.Left = Copy(root.Left)
+	r2.Right = Copy(root.Right)
+	return r2
 }
+
+
 
 
 func main() {
-
-
 	t := Tree{}
 	t.root = NewNode(0)
 	t.root.Left = NewNode(1)
@@ -339,25 +397,31 @@ func main() {
 	t.root.Right.Left = NewNode(5)
 	t.root.Right.Right = NewNode(6)
 	t.root.Right.Right.Right = NewNode(10)
+	fmt.Println(Serialize(t.root))
+	a := Deserialize(Serialize(t.root))
 
-	//InOrder(t.root)
-	//fmt.Println()
-	//InOderv2(t.root)
-	//fmt.Println()
-	//PreOrder(t.root)
-	//fmt.Println()
-	//PreOrderv2(t.root)
-	//fmt.Println()
+	PreOrder(a)
+	//fmt.Println("root1 is symmetric", IsSymmetric(root1))
+	fmt.Println("is SameTree", SameTree(t.root, a))
+	//Invertv2(root1)
+	//fmt.Println("root1 is balanced", IsBalanced(root1))
+	//fmt.Println("is mirror", IsMirrorv2(root1, t.root) )
+	//fmt.Println("is SameTree", SameTree(t.root, root1))
+	////fmt.Println()
+	////PreOrder(t.root)
+	////fmt.Println()
+	////PreOrderv2(t.root)
+	////fmt.Println()
 	//fmt.Println(LevelOrderv2(t.root))
-	//fmt.Println(LevelOrderv3(t.root))
-	//fmt.Println(ZigZagOrder(t.root))
+	//fmt.Println(LevelOrderv3(root1))
+	////fmt.Println(ZigZagOrder(t.root))
 
 	//fmt.Print("\n")
 	//fmt.Println(t.Depth())
 	//fmt.Println(t.Mindepth())
-	LevelOrder(t.root)
-	fmt.Println()
-	Invertv2(t.root)
-	LevelOrder(t.root)
-	fmt.Println()
+	//LevelOrder(t.root)
+	//fmt.Println()
+	//Invertv2(t.root)
+	//LevelOrder(t.root)
+	//fmt.Println()
 }
