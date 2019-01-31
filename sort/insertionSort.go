@@ -1,4 +1,4 @@
-package insertionsort
+package main
 
 //In the worst case scenario (reverse-sorted input), to ``insert" the i-th element, you need roughly log2i comparisons and i shifts.
 import "fmt"
@@ -42,6 +42,7 @@ func searchInsert(A []int, target int) int {
 	}
 	return lo
 }
+
 func binarySearch(A []int, target int, lo, hi int) int {
 	var mid int
 	for lo <= hi {
@@ -57,11 +58,42 @@ func binarySearch(A []int, target int, lo, hi int) int {
 	return -1
 }
 
+func search(A []int, target int) int { // search the idx of the smallest one in the rotated array
+	lo, hi := 0, len(A)-1
+	for lo < hi { // when lo == hi break the loop
+		mid := (lo + hi) / 2
+		if A[mid] > A[hi] {
+			lo = mid + 1
+		} else {
+			hi = mid
+		}
+	}
+	root := lo
+	lo, hi = 0, len(A)-1
+	for lo <= hi {
+		mid := (lo + hi) / 2
+		realMid := (mid + root) % len(A)
+		if A[realMid] == target {
+			return realMid
+		} else if target > A[realMid] {
+			lo = mid + 1
+		} else {
+			hi = mid - 1
+		}
+	}
+	return -1
+}
+
+func searchv2(A []int, target int) bool {
+
+}
+
 func main() {
-	A := []int{5, 6, 8, 2, 6, 7, 3}
-	Sort(A)
-	fmt.Println(A)
-	B := []int{3, 7, 9, 0, 6, 4}
-	Sortv2(B)
-	fmt.Println(B)
+	A := []int{2,5,6,0,0,1,2}
+	fmt.Println(search(A, 0))
+	//Sort(A)
+	//fmt.Println(A)
+	//B := []int{3, 7, 9, 0, 6, 4}
+	//Sortv2(B)
+	//fmt.Println(B)
 }

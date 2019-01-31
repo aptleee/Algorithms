@@ -42,6 +42,27 @@ func (h *Heap) MaxHeapify(i int) {
 	}
 }
 
+func (h *Heap) MaxHeapifyv2(i int) {
+	maxHeapify(h, i)
+}
+
+func  maxHeapify(h *Heap,i int) {
+	largest := i
+	left := child(i, 0)
+	right := child(i, 1)
+	if left < h.heapsize && h.array[largest] < h.array[left] {
+		largest = left
+	}
+	if right < h.heapsize && h.array[largest] < h.array[right] {
+		largest = right
+	}
+	if largest != i {
+		h.array[i], h.array[largest] = h.array[largest], h.array[i]
+		maxHeapify(h, largest)
+	}
+}
+
+
 func (h *Heap) IncreaseKey(i, key int) {
 	if h.array[i] >= key {
 		fmt.Println("key must be larger than the current key")
@@ -79,7 +100,7 @@ func BuildHeap(a []int) Heap {
 		heapsize: l,
 	}
 	for i := l / 2; i >= 0; i-- {
-		n.MaxHeapify(i)
+		n.MaxHeapifyv2(i)
 	}
 	return n
 }

@@ -4,7 +4,13 @@
 
 package main
 
-import "fmt"
+import (
+	"AlgorithmsGo-master/data_structure/queue/queuev2"
+	"fmt"
+	"math"
+	"strconv"
+	"strings"
+)
 
 type node struct {
 	Key, Val int
@@ -38,6 +44,13 @@ func inorder(n *node) {
 	}
 }
 
+func preOrder(n *node) {
+	if n != nil {
+		fmt.Print(n.Key, " ")
+		preOrder(n.Left)
+		preOrder(n.Right)
+	}
+}
 func search(root *node, Key int) int {
 	if root == nil {
 		return -1
@@ -124,20 +137,142 @@ func (t *BST) Show()  {
 	inorder(t.root)
 }
 
+func UniqueBST(n int) int { // n denotes the number of nodes
+	dp := make([]int, n+1)
+	dp[0], dp[1] = 1, 1
+	for i := 2; i < n+1; i++ {
+		for j := 1; j <= i; j++ { // either dp[j-1] or dp[i-j] can be dp[0], so the border condition is [1, i]
+			dp[i] += dp[j-1] * dp[i-j]// [0, j-1] + [j+1, i]
+		}
+	}
+	return dp[n]
+}
+
+func UniqueBSTv2(n int) []*node {
+	// two intervals
+	return generating(1, n)
+}
+
+func generating(start, end int) []*node {
+	res := []*node{}
+	if start > end {
+		res = append(res, nil)
+		return res
+	}
+
+	for i := start; i <= end; i++ { // take care of the border condition
+		l := generating(start, i-1)
+		r := generating(i+1, end)
+		for j := 0; j < len(l); j++ {
+			for k := 0; k < len(r); k++ {
+				root := newNode(i, 0)
+				root.Left = l[j]
+				root.Right = r[k]
+				res = append(res, root)
+			}
+		}
+	}
+	return res
+}
+
+func levelorder(root *node) {
+	if root != nil {
+		q := queuev2.New()
+		q.Enqueue(root)
+		for q.Empty() == false {
+			a := q.Dequeue().(*node)
+			fmt.Print(a.Val, " ")
+			if a.Left != nil {
+				q.Enqueue(a.Left)
+			}
+			if a.Right != nil {
+				q.Enqueue(a.Right)
+			}
+		}
+	}
+
+}
+
+
+//func deserializev2(post string) *node { // postorder
+//
+//	var build func(post string, root *node)
+//	build = func(post string, root *node) {
+//
+//	}
+//
+//}
+
+
+func serialize(n *node) string { // preorder
+	s := ""
+	var sh func(n *node)
+	sh = func(n *node){
+		if n != nil {
+			s = s + strconv.Itoa(n.Key) + " "
+			sh(n.Left)
+			sh(n.Right)
+		}
+	}
+	sh(n)
+	return s[:len(s)-1]
+}
+
+func deserialize(pre string) *node{ // preorder
+	q := queuev2.New()
+	for _, e := range strings.Split(pre, " ") {
+		v, _ := strconv.Atoi(e)
+		q.Enqueue(v)
+	}
+	var builder func(maxVal int) *node
+	builder = func(maxVal int) *node {
+		if q.Empty() == true || q.Front().(int) >= maxVal {
+			return nil
+		}
+		b := q.Dequeue().(int)
+		root := newNode(0, b)
+		root.Left = builder(root.Key)
+		root.Right = builder(maxVal)
+		return root
+	}
+	return builder(math.MaxInt32)
+}
+
+
+
+//func serializev2(*node) []int { //postorder
+//
+//}
+
+
+
+
+
 func main() {
-	t := &BST{nil}
-	t.Insert(10, 1)
-	t.Insert(20, 1)
-	t.Insert(12, 1)
-	t.Insert(22, 1)
-	t.Insert(30, 1)
-	t.Insert(11, 1)
-	t.Insert(60, 1)
+	//t := &BST{nil}
+	//t.Insert(25, 1)
+	//t.Insert(20, 1)
+	//t.Insert(12, 1)
+	//t.Insert(22, 1)
+	//t.Insert(30, 1)
+	//t.Insert(11, 1)
+	//t.Insert(60, 1)
+	//fmt.Println(serialize(t.root))
+	//a := deserialize(serialize(t.root))
+	//preOrder(a)
+	//fmt.Println()
+	//preOrder(t.root)
+	s := "s s"
+	fmt.Println(s[:3])
+	//t.Search(10)
+	//t.Delete(10)
 	//t.Show()
-	t.Search(10)
-	t.Delete(10)
-	t.Show()
-	t.Search(10)
+	//t.Search(10)
+	//fmt.Println(UniqueBST(3))
+	//for _, e := range UniqueBSTv2(3) {
+	//	levelorder(e)
+	//	fmt.Println()
+	//}
 	//t.root = bst_delete(t.root, 10)
 	//inorder(t.root)
 	//fmt.Print("\n")

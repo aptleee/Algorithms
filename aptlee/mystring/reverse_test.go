@@ -1,4 +1,4 @@
-package string
+package mystring
 
 import "testing"
 

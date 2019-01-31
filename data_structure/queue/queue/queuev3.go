@@ -10,8 +10,8 @@ type Q struct {
 	N     int
 }
 
-func New(size int) Q {
-	return Q{
+func New(size int) *Q {
+	return &Q{
 		array: make([]int, size),
 		size:  size,
 		head:  0,

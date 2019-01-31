@@ -6,9 +6,6 @@ import (
 )
 
 func merge(A []int, lo, i, hi int) {
-	if A[i] <= A[i+1] {
-		return
-	}
 	B := make([]int, i+2-lo)
 	C := make([]int, hi-i+1)
 	for j := 0; j < i-lo+1; j++ {

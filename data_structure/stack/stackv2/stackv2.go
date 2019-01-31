@@ -16,11 +16,13 @@ func (st *stackv2) Push(v interface{}) {
 	st.head = n
 }
 
-func (st *stackv2) Pop() {
+func (st *stackv2) Pop() interface{}{
+	t := st.head.val
 	st.head = st.head.next
+	return t
 }
 
-func (st *stackv2) Top() interface{} {
+func (st *stackv2) Peek() interface{} {
 	return st.head.val
 }
 func (st *stackv2) Empty() bool {
@@ -35,9 +37,9 @@ func main() {
 	st := New()
 	st.Push(true)
 	st.Push(false)
-	fmt.Println(st.Top())
+	fmt.Println(st.Peek())
 	st.Pop()
-	fmt.Println(st.Top())
+	fmt.Println(st.Peek())
 	st.Pop()
 	fmt.Println(st.Empty())
 }
