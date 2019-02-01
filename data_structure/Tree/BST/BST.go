@@ -105,10 +105,6 @@ func insert(root *node,  Key, Val int) *node {
 	return root
 }
 
-func (t *BST) Insert(Key, Val int) {
-	t.root = insert(t.root, Key, Val)
-
-}
 func leftMost(root *node) *node {
 	if root == nil {
 		return nil
