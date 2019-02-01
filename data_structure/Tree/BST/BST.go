@@ -87,12 +87,7 @@ func (t *BST) Get(Key int) int {
 }
 
 func (t *BST) Put(Key, Val int) {
-	a := search(t.root, Key)
-	if a == nil {
-		insert(t.root, Key, Val)
-	} else {
-		a.Val = Val
-	}
+	insert(t.root, Key, Val)
 }
 
 func insert(root *node,  Key, Val int) *node {
