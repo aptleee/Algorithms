@@ -232,8 +232,6 @@ func (t *BST) Range(lo, hi int) []int {
 	return ret
 }
 
-func
-
 func sel(root *node, k int) *node{
 	if root == nil {
 		return nil
