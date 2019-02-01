@@ -222,9 +222,11 @@ func merge(l1 doublyLinkedList, l2 doublyLinkedList) doublyLinkedList {
 	for l1.head != nil && l2.head != nil {
 		if l1.head.val > l2.head.val {
 			cur.next = l2.head
+			l2.head.prev = cur
 			l2.head = l2.head.next
 		} else {
 			cur.next = l1.head
+			l1.head.prev = cur
 			l1.head = l1.head.next
 		}
 		cur = cur.next

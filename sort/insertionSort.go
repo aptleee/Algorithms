@@ -43,6 +43,22 @@ func searchInsert(A []int, target int) int {
 	return lo
 }
 
+func  rank(A []int, target int) int {
+	lo, hi := 0, len(A)-1
+	mid := 0
+	for lo <= hi {
+		mid = (lo + hi) / 2
+		if target > A[mid] {
+			lo = mid + 1
+		} else if target < A[mid] {
+			hi = mid - 1
+		} else {
+			return mid
+		}
+	}
+	return lo
+}
+
 func binarySearch(A []int, target int, lo, hi int) int {
 	var mid int
 	for lo <= hi {

@@ -5,7 +5,7 @@ import "fmt"
 func partition(A []int, lo, hi int) int{
 	k := A[hi]
 	i := lo - 1
-	for j := lo; j < hi; j++ { // A[lo, i) <= k, A[i, j) > k, A[j, hi] to be checked
+	for j := lo; j < hi; j++ { // A[lo, i] <= k, A(i, j) > k, A[j, hi] to be checked
 		if A[j] <= k {
 			i++
 			A[i], A[j] = A[j], A[i]

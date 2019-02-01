@@ -7,18 +7,35 @@ package main
 import (
 	"AlgorithmsGo-master/data_structure/queue/queuev2"
 	"fmt"
+	"golang.org/x/lint/testdata"
+	"golang.org/x/net/html/atom"
 	"math"
 	"strconv"
 	"strings"
 )
 
 type node struct {
-	Key, Val int
+	Key, Val, N int
 	Left, Right  *node
 }
 
 type BST struct {
 	root *node
+}
+
+func (t *BST) Size() int {
+	return size(t.root)
+}
+
+func size(root *node) int {
+	return root.N
+}
+func (t *BST) Empty() bool {
+	return t.Size() == 0
+}
+
+func (t *BST) Contains(Key int) bool {
+	return t.Get(Key) != -1
 }
 
 func max(a, b int) int {
@@ -28,15 +45,15 @@ func max(a, b int) int {
 	return b
 }
 
-func newNode(Val, Key int) *node {
-	return &node{Key, Val, nil, nil}
+func newNode(Val, Key, N int) *node {
+	return &node{Key, Val, N,nil, nil}
 }
 
 func New() BST {
 	return BST{}
 }
 
-func inorder(n *node) {
+func inorder(n *node) { // zhong xu
 	if n != nil {
 		inorder(n.Left)
 		fmt.Println(n.Key, ":", n.Val)
@@ -51,52 +68,224 @@ func preOrder(n *node) {
 		preOrder(n.Right)
 	}
 }
-func search(root *node, Key int) int {
+func search(root *node, Key int) *node { // if not found return nil
 	if root == nil {
-		return -1
+		return nil
 	}
 	if root.Key > Key {
 		return search(root.Left, Key)
 	} else if root.Key < Key{
 		return search(root.Right, Key)
 	} else {
-		return root.Val
+		return root
 	}
 }
 
+func (t *BST) Get(Key int) int {
+	if search(t.root, Key) == nil {
+		return -1
+	}
+	return search(t.root, Key).Val
+}
 
-func (t *BST) Search(Key int)  {
-	fmt.Println(search(t.root, Key))
+func (t *BST) Put(Key, Val int) {
+	a := search(t.root, Key)
+	if a == nil {
+		insert(t.root, Key, Val)
+	} else {
+		a.Val = Val
+	}
 }
 
 func insert(root *node,  Key, Val int) *node {
 	if root == nil {
-		return newNode(Val, Key)
+		return newNode(Val, Key, 1)
 	}
 	if Key < root.Key {
 		root.Left = insert(root.Left, Key, Val)
 	} else {
 		root.Right = insert(root.Right, Key, Val)
 	}
+	root.Val = Val
+	root.N = size(root.Left) + size(root.Right) + 1
 	return root
 }
 
 func (t *BST) Insert(Key, Val int) {
 	t.root = insert(t.root, Key, Val)
+
 }
 func leftMost(root *node) *node {
+	if root == nil {
+		return nil
+	}
 	cur := root
 	for cur.Left != nil {
 		cur = cur.Left
 	}
 	return cur
 }
+func rightMost(root *node) *node {
+	if root == nil {
+		return nil
+	}
+	for root.Right != nil {
+		root = root.Right
+	}
+	return root
+}
+func (t *BST) MinKey() int {
+	a := leftMost(t.root)
+	if a == nil {
+		return -1
+	}
+	return a.Key
+}
+
+func (t *BST) Floor(key int) int {
+	x := floor(t.root, key)
+	if x == nil {
+		return -1
+	}
+	return x.Key
+}
+
+func floor(root *node, key int) *node {
+	if root == nil {
+		return nil
+	}
+	if key == root.Key {
+		return root
+	}
+	if key < root.Key {
+		return floor(root.Left, key)
+	}
+
+	a := floor(root.Right, key)
+	if a != nil {
+		return a
+	}
+	return root
+}
+
+func ceiling(root *node, key int) *node { // if not found return nil
+	if root == nil {
+		return nil
+	}
+	if key == root.Key {
+		return root
+	}
+	if key > root.Key {
+		return floor(root.Right, key)
+	}
+
+	a := floor(root.Left, key)
+	if a != nil {
+		return a
+	}
+	return root
+}
+func (t *BST) Ceiling(key int) int {
+	x := ceiling(t.root, key)
+	if x == nil {
+		return -1
+	}
+	return x.Key
+}
+
+func rank(root *node, key int) int {// numbers of items before key
+	if root == nil {
+		return 0
+	}
+	if root.Key < key {
+		return size(root.Left) + 1 + rank(root.Right, key)
+	} else if root.Key > key {
+		return rank(root.Left, key)
+	} else {
+		return size(root.Left)
+	}
+}
+
+
+func (t *BST) Rank(key int) int { // number of keys less than key
+	return rank(t.root, key)
+}
+
+func (t *BST) Range(lo, hi int) []int {
+	ret := []int{}
+	var rang func(root *node, lo, hi int)
+	rang = func(root *node, lo, hi int) {
+		if root == nil {
+			return
+		}
+		if lo < t.root.Key {
+			rang(t.root.Left, lo, hi)
+		}
+		if lo <= t.root.Key && t.root.Key <= hi {
+			ret = append(ret, t.root.Key)
+		}
+		if hi > t.root.Key {
+			rang(root.Right, lo, hi)
+		}
+	}
+	rang(t.root, lo, hi)
+	return ret
+}
+
+func
+
+func sel(root *node, k int) *node{
+	if root == nil {
+		return nil
+	}
+	a := size(root.Left)
+	if a > k {// still the kth items in the left tree
+		return sel(root.Left, k)
+	} else if a < k { // the (k-a-1)th items in the right tree
+		return sel(root.Right, k-a-1)
+	} else {
+		return root
+	}
+
+}
+
+func (t *BST) Select(n int) int { // key == select(rank(key)) i == rank(select(i))
+	if n < 1 {
+		return -1
+	}
+	if sel(t.root, n) == nil { // k is larger than size(t.root)
+		return -1
+	}
+	return sel(t.root, n).Key
+}
+
+
+
+func (t *BST) MaxKey() int {
+	a := rightMost(t.root)
+	if a == nil {
+		return -1
+	}
+	return a.Key
+}
 
 func (t *BST) Delete(Key int) {
 	t.root = bst_delete(t.root, Key)
 }
 
-func bst_delete(root *node, Key int) *node {
+func deleteMin(root *node) *node {
+	if root == nil {
+		return nil
+	}
+	if root.Left == nil {
+		return root.Right
+	}
+	root.Left = deleteMin(root.Left)
+	root.N = size(root.Left) + size(root.Right) + 1
+	return root
+}
+
+func bst_delete(root *node, Key int) *node { // if not found, nothing changed
 	if root == nil {
 		return nil
 	}
@@ -119,6 +308,7 @@ func bst_delete(root *node, Key int) *node {
 			root.Right = bst_delete(root.Right, d.Key)
 		}
 	}
+	root.N = size(root.Left) + size(root.Right) + 1
 	return root
 }
 
