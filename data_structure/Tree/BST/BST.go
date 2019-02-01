@@ -101,10 +101,11 @@ func insert(root *node,  Key, Val int) *node {
 	}
 	if Key < root.Key {
 		root.Left = insert(root.Left, Key, Val)
-	} else {
+	} else if Key > root.Key {
 		root.Right = insert(root.Right, Key, Val)
+	} else {
+		root.Val = Val
 	}
-	root.Val = Val
 	root.N = size(root.Left) + size(root.Right) + 1
 	return root
 }
