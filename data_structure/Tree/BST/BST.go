@@ -7,8 +7,6 @@ package main
 import (
 	"AlgorithmsGo-master/data_structure/queue/queuev2"
 	"fmt"
-	"golang.org/x/lint/testdata"
-	"golang.org/x/net/html/atom"
 	"math"
 	"strconv"
 	"strings"
