@@ -43,7 +43,7 @@ func searchInsert(A []int, target int) int {
 	return lo
 }
 
-func  rank(A []int, target int) int {
+func rank(A []int, target int) int {
 	lo, hi := 0, len(A)-1
 	mid := 0
 	for lo <= hi {
@@ -74,31 +74,31 @@ func binarySearch(A []int, target int, lo, hi int) int {
 	return -1
 }
 
-func search(A []int, target int) int { // search the idx of the smallest one in the rotated array
-	lo, hi := 0, len(A)-1
-	for lo < hi { // when lo == hi break the loop
-		mid := (lo + hi) / 2
-		if A[mid] > A[hi] {
-			lo = mid + 1
-		} else {
-			hi = mid
-		}
-	}
-	root := lo
-	lo, hi = 0, len(A)-1
-	for lo <= hi {
-		mid := (lo + hi) / 2
-		realMid := (mid + root) % len(A)
-		if A[realMid] == target {
-			return realMid
-		} else if target > A[realMid] {
-			lo = mid + 1
-		} else {
-			hi = mid - 1
-		}
-	}
-	return -1
-}
+//func search(A []int, target int) int { // search the idx of the smallest one in the rotated array
+//	lo, hi := 0, len(A)-1
+//	for lo < hi { // when lo == hi break the loop
+//		mid := (lo + hi) / 2
+//		if A[mid] > A[hi] {
+//			lo = mid + 1
+//		} else {
+//			hi = mid
+//		}
+//	}
+//	root := lo
+//	lo, hi = 0, len(A)-1
+//	for lo <= hi {
+//		mid := (lo + hi) / 2
+//		realMid := (mid + root) % len(A)
+//		if A[realMid] == target {
+//			return realMid
+//		} else if target > A[realMid] {
+//			lo = mid + 1
+//		} else {
+//			hi = mid - 1
+//		}
+//	}
+//	return -1
+//}
 
 func searchv2(A []int, target int) bool {
 
