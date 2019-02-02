@@ -45,7 +45,7 @@ func (lru *LRU) Putv2(key, value int) {
 			val: value,
 		}
 		lru.nodes[key] = node
-		c.insertToFist(node)
+		lru.insertToFirst(node)
 	}
 }
 
