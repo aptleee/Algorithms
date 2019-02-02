@@ -1,4 +1,6 @@
-package integer
+package main
+
+import "fmt"
 
 //given an integer n, construct a prime table range from 2 - n
 
@@ -18,4 +20,8 @@ func Eratosthenes(n int) []int { // delete 2p, 3p, 4p,... for every non-negative
 		}
 	}
 	return ret
+}
+
+func main() {
+	fmt.Println(Eratosthenes(100))
 }
