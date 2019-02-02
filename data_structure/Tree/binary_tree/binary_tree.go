@@ -111,13 +111,42 @@ func PreOrderv2(root *TreeNode) {
 	}
 }
 
+func PreOrderv3(root *TreeNode) []int {
+	ret := []int{}
+	if root == nil {
+		return ret
+	}
+	st := stackv2.New()
+	st.Push(root)
+	for st.Empty() == false {
+		a := st.Pop().(*TreeNode)
+		ret = append(ret, a.Val)
+		if a.Right != nil {
+			st.Push(a.Right)
+		}
+		if a.Left != nil {
+			st.Push(a.Left)
+		}
+	}
+	return ret
+}
+
+func PostOrder(root *TreeNode) {
+	if root != nil {
+		PostOrder(root.Left)
+		PostOrder(root.Right)
+		fmt.Print(root.Val, " ")
+	}
+
+}
+
 func PostOrderv2(root *TreeNode) []int{
 	ret := []int{}
-	st := stackv2.New()
 	cur := root
 	if cur == nil {
 		return ret
 	}
+	st := stackv2.New()
 	st.Push(root)
 	for st.Empty() == false {
 		r := st.Pop().(*TreeNode)
@@ -133,13 +162,20 @@ func PostOrderv2(root *TreeNode) []int{
 	return ret
 }
 
-func PostOrder(root *TreeNode) {
-	if root != nil {
-		PostOrder(root.Left)
-		PostOrder(root.Right)
-		fmt.Print(root.Val, " ")
+func PostOrderv3(root *TreeNode) []int {
+	ret := []int{}
+	st := stackv2.New()
+	for root != nil || st.Empty() != false {
+		for root != nil {
+			ret = append(ret, root.Val)
+			st.Push(root)
+			root = root.Right
+		}
+		a := st.Pop().(*TreeNode)
+		root = a.Left
 	}
-
+	Reverse(ret)
+	return ret
 }
 
 func LevelOrder(root *TreeNode) {

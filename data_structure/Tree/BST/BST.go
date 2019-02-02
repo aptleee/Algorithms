@@ -109,12 +109,12 @@ func leftMost(root *node) *node {
 	if root == nil {
 		return nil
 	}
-	cur := root
-	for cur.Left != nil {
-		cur = cur.Left
+	for root.Left != nil {
+		root = root.Left
 	}
-	return cur
+	return root
 }
+
 func rightMost(root *node) *node {
 	if root == nil {
 		return nil
@@ -124,6 +124,7 @@ func rightMost(root *node) *node {
 	}
 	return root
 }
+
 func (t *BST) MinKey() int {
 	a := leftMost(t.root)
 	if a == nil {
@@ -132,7 +133,7 @@ func (t *BST) MinKey() int {
 	return a.Key
 }
 
-func (t *BST) Floor(key int) int {
+func (t *BST) Floor(key int) int { // largest k less than or equal to key
 	x := floor(t.root, key)
 	if x == nil {
 		return -1
@@ -238,9 +239,6 @@ func sel(root *node, k int) *node{
 }
 
 func (t *BST) Select(n int) int { // key == select(rank(key)) i == rank(select(i))
-	if n < 1 {
-		return -1
-	}
 	if sel(t.root, n) == nil { // k is larger than size(t.root)
 		return -1
 	}

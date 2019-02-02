@@ -246,6 +246,20 @@ func smerge(l1 singlyLinkedList, l2 singlyLinkedList) singlyLinkedList {
 	return singlyLinkedList{dummy.next}
 }
 
+func smergev2(h1 *singlyLinkedNode, h2 *singlyLinkedNode) *singlyLinkedNode {
+	if h1 == nil {
+		return h2
+	}
+	if h2 == nil {
+		return h1
+	}
+	if h1.val < h2.val {
+		h1.next = smergev2(h1.next, h2)
+		return h1
+	}
+	h2.next = smergev2(h2.next, h1)
+	return h2
+}
 func main() {
 	ll := singlyLinkedList{}
 
