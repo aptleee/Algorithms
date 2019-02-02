@@ -16,7 +16,7 @@ type LRU struct {
 func NewLRU(c int) LRU {
 	return LRU{
 		c: c,
-		// nodes: make(map[int]*doublyLinkedNode),
+		nodes: make(map[int]*doublyLinkedNode),
 	}
 }
 
