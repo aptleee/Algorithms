@@ -6,6 +6,7 @@ package main
 
 import (
 	"AlgorithmsGo-master/data_structure/queue/queuev2"
+	"AlgorithmsGo-master/data_structure/stack/stackv2"
 	"fmt"
 	"math"
 	"strconv"
@@ -420,6 +421,23 @@ func deserialize(pre string) *node{ // preorder
 //
 //}
 
+func ValidatePreOrderOfBST(A []int) bool {
+	if len(A) == 0 {
+		return true
+	}
+	st := stackv2.New()
+	low := math.MinInt32
+	for _, e := range A {
+		if e < low {
+			return  false
+		}
+		for st.Empty() == false && e > st.Peek().(int) { // in the right child of one subtree
+			low = st.Pop().(int)
+		}
+		st.Push(e)
+	}
+	return true
+}
 
 
 
