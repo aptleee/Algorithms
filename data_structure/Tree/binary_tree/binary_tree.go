@@ -476,6 +476,9 @@ func Deserialize(s string) *TreeNode { // preorder
 	}
 	var dh func() *TreeNode
 	dh = func() *TreeNode{
+		if q.Empty() == true {
+			return nil
+		}
 		a := q.Dequeue().(string)
 		if a == "#" {
 			return nil

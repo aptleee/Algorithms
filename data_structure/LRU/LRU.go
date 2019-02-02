@@ -8,7 +8,7 @@ type doublyLinkedNode struct {
 }
 
 type LRU struct {
-	l, c        int
+	l, c        int // c is the max size of lru, l is the current length
 	first, last *doublyLinkedNode
 	nodes       map[int]*doublyLinkedNode
 }
