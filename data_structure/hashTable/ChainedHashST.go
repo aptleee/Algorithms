@@ -134,8 +134,8 @@ func (ta *chainedHashTable) Put(key hash, v int) {
 }
 
 func (ta *chainedHashTable) Delete(key hash) interface{} {
-	a := ta.Get(key)
-	if  a == -1{
+	a := ta.Table[key.hash()].Search(key)
+	if  a == nil{
 		return -1
 	} else {
 		ta.Table[key.hash()].Delete(key)
