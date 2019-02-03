@@ -29,19 +29,3 @@ func (u *UF) union(i, j int) {
 		u.friends[ir] = jr
 	}
 }
-func findCircleNum(M [][]int) int {
-	n := len(M)
-	u := New(n)
-	for i:=0; i<n; i++ {
-		for j:=i+1; j<n; j++ {
-			if M[i][j] == 1{
-				u.union(i, j)
-			}
-		}
-	}
-	return u.count
-}
-
-func main() {
-
-}
