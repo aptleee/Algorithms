@@ -98,7 +98,7 @@ func (lst *LinearProbingHashST) contain(k hash) bool {
 	return false
 }
 func (lst *LinearProbingHashST) Delete(k hash) { // cannot just set the lst.Key[k.hash()] to nil, which will make the
-// elements after it unavailable, so we need to As a consequence, we need to reinsert into the table all of the keys
+// elements after it unavailable, so we need to reinsert into the table all of the keys
 // in the cluster to the right of the deleted key
 	if lst.contain(k) == false {
 		return
