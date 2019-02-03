@@ -1,4 +1,4 @@
-package main
+package linkedlist
 
 import "fmt"
 
@@ -10,7 +10,7 @@ type list struct {
 	sentinel *listNode
 }
 
-func New() list{
+func Newn() list{
 	sen := &listNode{nil, 0}
 	sen.next = sen
 	return list{sen}
@@ -58,7 +58,7 @@ func (ll *list) Delete(v int) {
 }
 
 func main() {
-	ll := New()
+	ll := Newn()
 	ll.Insert(1)
 	ll.Insert(2)
 	ll.Insert(3)

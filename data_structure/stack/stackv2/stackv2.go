@@ -3,7 +3,7 @@ import "fmt"
 
 type node struct {
 	next *node
-	val interface{}
+	Val interface{}
 }
 
 type stackv2 struct {
@@ -17,13 +17,13 @@ func (st *stackv2) Push(v interface{}) {
 }
 
 func (st *stackv2) Pop() interface{}{
-	t := st.head.val
+	t := st.head.Val
 	st.head = st.head.next
 	return t
 }
 
 func (st *stackv2) Peek() interface{} {
-	return st.head.val
+	return st.head.Val
 }
 func (st *stackv2) Empty() bool {
 	return st.head == nil

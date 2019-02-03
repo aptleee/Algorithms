@@ -22,6 +22,16 @@ func NewHeapA(a []int) Heap {
 	return BuildHeap(a)
 }
 
+func (h *Heap) Fix(i int) {
+	if h.array[i] >= h.array[parent(i)] {
+		h.IncreaseKey(i, h.array[i])
+	} else if h.array[i] < h.array[child(i, 0)] || h.array[i] < h.array[child(i, 1)] {
+		h.MaxHeapify(i)
+	} else {
+		return
+	}
+}
+
 func (h *Heap) MaxHeapify(i int) {
 	largest := i
 	for i < h.heapsize {

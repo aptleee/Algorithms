@@ -4,7 +4,7 @@ import "fmt"
 
 type node struct {
 	next *node
-	val interface{}
+	Val interface{}
 }
 
 
@@ -29,8 +29,7 @@ func (q *Queue) Enqueue(v interface{}) {
 }
 
 func (q *Queue) Dequeue() interface{}{
-	v := q.head.val
-	q.count--
+	v := q.head.Val
 	if q.head == q.tail {
 		q.head, q.tail = nil, nil
 		return v
@@ -48,11 +47,11 @@ func (q *Queue) Len() int {
 }
 
 func (q *Queue) Front() interface{} {
-	return q.head.val
+	return q.head.Val
 }
 
 func (q *Queue) Back() interface{} {
-	return q.tail.val
+	return q.tail.Val
 }
 
 
