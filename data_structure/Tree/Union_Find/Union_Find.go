@@ -23,7 +23,7 @@ func (u *UF) find(i int) int{
 	return i
 }
 
-func (u *UF) qucikUnion(i, j int) { //quick union
+func (u *UF) quickUnion(i, j int) { //quick union
 	ir := u.find(i)
 	jr := u.find(j)
 	if ir != jr {
