@@ -87,7 +87,7 @@ package hashTable
 
 // r-s = a(k-l)%p != 0
 
-// hash :gv bhyb7 = 0
+// hash := 0
 // for i:=0; i < len(s); i++ {
 //	hash = (R * hash + int(s[i])) % M
 // }
