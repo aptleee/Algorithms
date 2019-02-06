@@ -1,7 +1,5 @@
 package linkedlist
 
-import "fmt"
-
 type listNode struct {
 	next *listNode
 	val int
@@ -55,14 +53,4 @@ func (ll *list) Delete(v int) {
 			n = n.next
 		}
 	}
-}
-
-func main() {
-	ll := Newn()
-	ll.Insert(1)
-	ll.Insert(2)
-	ll.Insert(3)
-	fmt.Println(ll.Searchv2(3).val)
-	ll.Delete(2)
-	fmt.Println(ll.Search(2))
 }

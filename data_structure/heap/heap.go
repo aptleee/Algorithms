@@ -109,7 +109,7 @@ func BuildHeap(a []int) Heap {
 		array:    a,
 		heapsize: l,
 	}
-	for i := l / 2; i >= 0; i-- {
+	for i := l/2 - 1; i >= 0; i-- {
 		n.MaxHeapifyv2(i)
 	}
 	return n

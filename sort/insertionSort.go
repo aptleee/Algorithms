@@ -44,7 +44,7 @@ func searchInsert(A []int, target int) int {
 	return lo
 }
 
-func rank(A []int, target int) int {
+func rank(A []int, target int) int { // the same as searchInsert, which
 	lo, hi := 0, len(A)-1
 	mid := 0
 	for lo <= hi {

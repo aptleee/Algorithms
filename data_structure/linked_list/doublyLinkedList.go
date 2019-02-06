@@ -227,7 +227,7 @@ func Sort(dl DoublyLinkedList) DoublyLinkedList {
 }
 
 func merge(l1 DoublyLinkedList, l2 DoublyLinkedList) DoublyLinkedList {
-	dummy := New(0)
+	dummy := New(0,0)
 	cur := dummy
 	for l1.head != nil && l2.head != nil {
 		if l1.head.Val > l2.head.Val {
@@ -279,41 +279,41 @@ func (dl *DoublyLinkedList) IsCicular() bool {
 	return true
 }
 
-func main() {
-	ll := DoublyLinkedList{}
-	ll.AddAtBeg(10, 10)
-	ll.AddAtEnd(20,20)
-	ll.AddAtBeg(20,20)
-	ll.AddAtBeg(30,20)
-	ll.AddAtEnd(40,40)
-	ll.AddAtBeg(50,40)
-	ll.Display()
-	fmt.Println("sorted? ", ll.IsSorted())
-	fmt.Println("has cycle?", ll.IsCicular())
-	//fmt.Println(ll.head.prev)
-	//ll.Reverse()
-	//ll.Display()
-	ll.Remove(20)
-	ll.Display()
-	//ll.Reversev2(ll.head.next, ll.head.next.next.next)
-	ll.Reversev3(1, 4)
-	ll.Display()
-	ll = Sort(ll)
-	ll.Display()
-	fmt.Println("sorted? ",ll.IsSorted())
-	//cur := ll.head
-	//for ; cur.next != nil; cur = cur.next {
-	//}
-	//cur.next = ll.head
-	//ll.head.prev = cur
-	//fmt.Println("has cycle?", ll.IsCicular())
-	// ll.DisplayReverse()
-	// fmt.Println(ll.DelAtBeg())
-	// fmt.Println(ll.DelAtEnd())
-	// fmt.Println("Display")
-	// ll.Display()
-	// fmt.Println(ll.DelAtBeg())
-	//ll.Display()
-	// fmt.Print(ll.DelAtBeg())
-	// ll.Display()
-}
+//func main() {
+//	ll := DoublyLinkedList{}
+//	ll.AddAtBeg(10, 10)
+//	ll.AddAtEnd(20,20)
+//	ll.AddAtBeg(20,20)
+//	ll.AddAtBeg(30,20)
+//	ll.AddAtEnd(40,40)
+//	ll.AddAtBeg(50,40)
+//	ll.Display()
+//	fmt.Println("sorted? ", ll.IsSorted())
+//	fmt.Println("has cycle?", ll.IsCicular())
+//	//fmt.Println(ll.head.prev)
+//	//ll.Reverse()
+//	//ll.Display()
+//	ll.Remove(20)
+//	ll.Display()
+//	//ll.Reversev2(ll.head.next, ll.head.next.next.next)
+//	ll.Reversev3(1, 4)
+//	ll.Display()
+//	ll = Sort(ll)
+//	ll.Display()
+//	fmt.Println("sorted? ",ll.IsSorted())
+//	//cur := ll.head
+//	//for ; cur.next != nil; cur = cur.next {
+//	//}
+//	//cur.next = ll.head
+//	//ll.head.prev = cur
+//	//fmt.Println("has cycle?", ll.IsCicular())
+//	// ll.DisplayReverse()
+//	// fmt.Println(ll.DelAtBeg())
+//	// fmt.Println(ll.DelAtEnd())
+//	// fmt.Println("Display")
+//	// ll.Display()
+//	// fmt.Println(ll.DelAtBeg())
+//	//ll.Display()
+//	// fmt.Print(ll.DelAtBeg())
+//	// ll.Display()
+//}

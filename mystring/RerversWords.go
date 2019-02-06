@@ -2,7 +2,6 @@ package mystring
 
 import (
 	"fmt"
-	"github/aptlee/mystring"
 )
 
 func ReverseWords(s string) string{

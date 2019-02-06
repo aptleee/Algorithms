@@ -110,12 +110,8 @@ func New() *chainedHashTable {
 	}
 }
 
-type hash interface {
-	hash() int
-}
-
 func (ta *chainedHashTable) Get(key hash) interface{} {
-	a := ta.Table[key.hash()].Search(key)
+	a := ta.Table[key.hash(ta.M)].Search(key)
 	if a == nil {
 		return -1
 	} else {
@@ -124,9 +120,9 @@ func (ta *chainedHashTable) Get(key hash) interface{} {
 }
 
 func (ta *chainedHashTable) Put(key hash, v int) {
-	a := ta.Table[key.hash()].Search(key)
+	a := ta.Table[key.hash(ta.M)].Search(key)
 	if a == nil {
-		ta.Table[key.hash()].AddAtBeg(key, v)
+		ta.Table[key.hash(ta.M)].AddAtBeg(key, v)
 		ta.N++
 	} else {
 			a.Val = v
@@ -134,11 +130,11 @@ func (ta *chainedHashTable) Put(key hash, v int) {
 }
 
 func (ta *chainedHashTable) Delete(key hash) interface{} {
-	a := ta.Table[key.hash()].Search(key)
+	a := ta.Table[key.hash(ta.M)].Search(key)
 	if  a == nil{
 		return -1
 	} else {
-		ta.Table[key.hash()].Delete(key)
+		ta.Table[key.hash(ta.M)].Delete(key)
 		ta.N--
 		return a
 	}

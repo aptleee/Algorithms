@@ -260,33 +260,33 @@ func smergev2(h1 *singlyLinkedNode, h2 *singlyLinkedNode) *singlyLinkedNode {
 	h2.next = smergev2(h2.next, h1)
 	return h2
 }
-func main() {
-	ll := singlyLinkedList{}
-
-	ll.AddAtBeg(10)
-	//ll.AddAtEnd(20)
-	//ll.AddAtBeg(20)
-	//ll.AddAtBeg(30)
-	ll.AddAtEnd(40)
-	//ll.AddAtBeg(50)
-	//ll.Display()
-	//ll.Delete(20)
-	//ll.Display()
-	ll.Deletev2(40)
-	ll.Deletev2(10)
-	ll.Display()
-	//fmt.Println("sorted? ", ll.IsSorted())
-	//fmt.Println("has cycle?", ll.IsCicular())
-	////fmt.Println(ll.head.prev)
-	////ll.Reverse()
-	////ll.Display()
-	//ll.Remove(20)
-	//ll.Display()
-	////ll.Reversev2(ll.head.next, ll.head.next.next.next)
-	//ll.Reversev3(1, 4)
-	//ll.Display()
-	//ll = sort(ll)
-	//ll.Display()
-	//fmt.Println("sorted? ",ll.IsSorted())
-
-}
+//func main() {
+//	ll := singlyLinkedList{}
+//
+//	ll.AddAtBeg(10)
+//	//ll.AddAtEnd(20)
+//	//ll.AddAtBeg(20)
+//	//ll.AddAtBeg(30)
+//	ll.AddAtEnd(40)
+//	//ll.AddAtBeg(50)
+//	//ll.Display()
+//	//ll.Delete(20)
+//	//ll.Display()
+//	ll.Deletev2(40)
+//	ll.Deletev2(10)
+//	ll.Display()
+//	//fmt.Println("sorted? ", ll.IsSorted())
+//	//fmt.Println("has cycle?", ll.IsCicular())
+//	////fmt.Println(ll.head.prev)
+//	////ll.Reverse()
+//	////ll.Display()
+//	//ll.Remove(20)
+//	//ll.Display()
+//	////ll.Reversev2(ll.head.next, ll.head.next.next.next)
+//	//ll.Reversev3(1, 4)
+//	//ll.Display()
+//	//ll = sort(ll)
+//	//ll.Display()
+//	//fmt.Println("sorted? ",ll.IsSorted())
+//
+//}

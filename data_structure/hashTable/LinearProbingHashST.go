@@ -1,4 +1,4 @@
-package main
+package hashTable
 
 import "fmt"
 
@@ -45,27 +45,31 @@ func main() {
 		a.Put(myint(i), i)
 	}
 	a.Put(myint(41), 41)
-	a.Put(myint(11), 11)
-	a.Delete(myint(10))
+	fmt.Println(a)
+	for i := 11; i < 31; i++ {
+		a.Put(myint(i), i)
+	}
+	fmt.Println(a)
 	fmt.Println(a.Get(myint(41)))
 }
 
 
 func (lst *LinearProbingHashST) resize(M int) {
 	t := Newv2(M)
-	for i := 0; i < lst.M; i++ {
+	for i:=0; i < lst.M; i++ {
 		if lst.Key[i] != nil {
-			t.Put(lst.Key[i], lst.Val[i])
+			t.Put(lst.Key[i], lst.Val[i]) // put will not call resize again, for t.N will always be less than t.M/4
 		}
 	}
 	lst.Key = t.Key
 	lst.Val = t.Val
 	lst.M = t.M
+	// lst.N is still lst.N
 }
 
 func (lst *LinearProbingHashST) Put(k hash, v interface{}) {
 	if lst.N >= lst.M/2 {
-		lst.resize(2*lst.M)
+		lst.resize(2*lst.M) //
 	}
 	var i int
 	for i = k.hash(lst.M); lst.Key[i] != nil; i = (i+1)%lst.M {
