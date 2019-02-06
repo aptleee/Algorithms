@@ -1,4 +1,4 @@
-package main
+package sort
 
 //In the worst case scenario (reverse-sorted input), to ``insert" the i-th element, you need roughly log2i comparisons and i shifts.
 import "fmt"
@@ -28,6 +28,7 @@ func Sortv2(A []int) {
 		A[j] = key
 	}
 }
+
 
 func searchInsert(A []int, target int) int {
 	lo, hi := 0, len(A)-1
@@ -100,13 +101,11 @@ func binarySearch(A []int, target int, lo, hi int) int {
 //	return -1
 //}
 
-func searchv2(A []int, target int) bool {
 
-}
 
 func main() {
 	A := []int{2,5,6,0,0,1,2}
-	fmt.Println(search(A, 0))
+
 	//Sort(A)
 	//fmt.Println(A)
 	//B := []int{3, 7, 9, 0, 6, 4}

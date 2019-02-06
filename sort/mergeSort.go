@@ -53,8 +53,8 @@ func min(a, b int) int {
 	return b
 }
 
-func main() {
-	A := []int{9,8,7,6,5,4,3,2,1}
-	MergeSortv2(A)
-	fmt.Println(A)
-}
+//func main() {
+//	A := []int{9,8,7,6,5,4,3,2,1}
+//	MergeSortv2(A)
+//	fmt.Println(A)
+//}
