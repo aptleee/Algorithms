@@ -25,6 +25,7 @@ func (st *stackv2) Pop() interface{}{
 func (st *stackv2) Peek() interface{} {
 	return st.head.Val
 }
+
 func (st *stackv2) Empty() bool {
 	return st.head == nil
 }

@@ -13,9 +13,13 @@ type Trie struct {
 }
 
 func New() *Trie {
+	n := &node{
+		val:nil,
+		next:[256]*node{},
+	}
 	return &Trie{
 		r:256,
-		root:nil,
+		root:n,
 	}
 }
 
@@ -56,5 +60,8 @@ func (t *Trie) Put(key string, val interface{}) {
 }
 
 func main() {
-	fmt.Println([10]*node{})
+	t := New()
+	t.Put("hello world", 1)
+	fmt.Println(t.Get("hello"))
+	fmt.Println(t.Get("hello world"))
 }

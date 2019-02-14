@@ -147,6 +147,17 @@ func (h *Heap) Delete(i int) {
 	}
 }
 
+func (h *Heap) Deletev2(i int) {
+	h.heapsize--
+	if h.array[i] > h.array[h.heapsize] {
+		h.array[i] = h.array[h.heapsize]
+		h.MaxHeapify(i)
+	} else {
+		h.array[i] = h.array[h.heapsize]
+		h.IncreaseKey(i, h.array[h.heapsize])
+	}
+}
+
 func main() {
 	a := []int{1, 6, 3, 4, 5, 8}
 	// b := []int{1, 6, 3, 4, 5, 8}

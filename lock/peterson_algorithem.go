@@ -17,9 +17,9 @@ func unlock(i int) {
 // simple spin lock implementation
 // flag = 0
 // func test&set(flag)  {
-// 	rv = flag
+// 	tmp = flag
 //	flag = 1
-//	return rv
+//	return tmp
 // }
 
 // func lock() {
@@ -30,17 +30,17 @@ func unlock(i int) {
 // 	flag = 0
 // }
 
-// func compare&swap(v ,expected, new_v int) {
-//	tmp := v
-//	if v == expected {
-//		v = new_v
+// func compare&swap(flag ,expected, new_v int) {
+//	tmp := flag
+//	if flag == expected {
+//		flag = new_v
 //	}
 // 	return tmp
 // }
 //
-// lock = 0
+// flag = 0
 // func lock(){
-// 	for compare&swap(v, 0, 1) != 0 {}
+// 	for compare&swap(flag, 0, 1) == 1 {}
 // }
 // func unlock() {
 //	lock = 0

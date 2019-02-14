@@ -284,7 +284,10 @@ func IsMirror(t1, t2 *TreeNode) bool {
 }
 
 func IsSymmetricv2(root *TreeNode) bool {
-	return IsMirrorv2(root, root)
+	if root == nil {
+		return false
+	}
+	return IsMirrorv2(root.Left, root.Right)
 }
 
 func IsMirrorv2(t1, t2 *TreeNode) bool{
@@ -543,6 +546,25 @@ func Copy(root *TreeNode) *TreeNode{
 	r2.Left = Copy(root.Left)
 	r2.Right = Copy(root.Right)
 	return r2
+}
+
+
+func LCA(root, p, q *TreeNode) *TreeNode{
+	if root == nil {
+		return nil
+	}
+	if root.Val == p.Val || root.Val == q.Val{
+		return root
+	}
+	left := LCA(root.Left, p, q)
+	right := LCA(root.Right, p, q)
+	if left != nil && right != nil {
+		return root
+	}
+	if left == nil {
+		return right
+	}
+	return left
 }
 
 

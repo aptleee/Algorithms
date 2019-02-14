@@ -53,7 +53,7 @@ func (dq *deque) RemoveFirst() int {
 
 func (dq *deque) RemoveLast() int {
 	if dq.N <= 0 {
-		fmt.Println("the deuqe is empty")
+		fmt.Println("the deque is empty")
 		return -1
 	}
 	dq.N--

@@ -57,6 +57,8 @@ func (this *BoundedBuf) produce(x int){
 	this.full.Signal()
 }
 
+
+
 func (this *BoundedBuf) consumer() {
 	this.full.Wait()
 	this.lock.Wait()

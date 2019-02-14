@@ -15,6 +15,9 @@ func partition(A []int, lo, hi int) int{
 	return i+1
 }
 
+func randomPartition(A []int, lo, hi int) int {
+
+}
 func Quick3Way(A []int, lo, hi int) int{
 	k := A[lo]
 	lt, i, gt := lo, lo+1, hi // A[lo-lt) < k, A[lt-i) == k, A(gt-hi] > k, A[i-gt] to be checked

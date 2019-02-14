@@ -1,7 +1,11 @@
 package sort
 
+"bufio"
+
 //In the worst case scenario (reverse-sorted input), to ``insert" the i-th element, you need roughly log2i comparisons and i shifts.
-import "fmt"
+import (
+	"fmt"
+)
 
 func Sort(A []int) {
 	n := len(A)
@@ -104,7 +108,6 @@ func binarySearch(A []int, target int, lo, hi int) int {
 
 
 func main() {
-	A := []int{2,5,6,0,0,1,2}
 
 	//Sort(A)
 	//fmt.Println(A)
