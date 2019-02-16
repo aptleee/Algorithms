@@ -90,9 +90,9 @@ func insert(key Key, val interface{}, node *TreeNode) *TreeNode {
 
 	// sequence counts, insert to a 2-node or insert to a 3-node
 	if isRed(node.Right) && !isRed(node.Left) {
-		RotateLeft(node)
+		node = RotateLeft(node)
 	} else if isRed(node.Left) && isRed(node.Left.Left) {
-		RotateRight(node)
+		node = RotateRight(node)
 	} else if isRed(node.Left) && isRed(node.Right) { // decompose 4-node
 		flipColor(node)
 	}
