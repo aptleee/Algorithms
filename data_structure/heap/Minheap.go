@@ -68,11 +68,11 @@ func Fix(h heap, i int) {
 
 func HeapSortv2(h heap) {
 	buildHeap(h)
-	n := h.Len()
+	n := h.Len()-1
 	for n > 0 {
-		n--
 		h.Swap(0, n)
 		down(h, 0, n)
+		n--
 	}
 
 }
