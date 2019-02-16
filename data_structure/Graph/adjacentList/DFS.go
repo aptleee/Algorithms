@@ -1,4 +1,4 @@
-package Graph
+package adjacentList
 
 import "container/list"
 
@@ -30,6 +30,8 @@ func dfsOrder() ([]int, []int, []int) {
 		}
 		post = append(post, v)
 	}
+
+
 	for i := 0; i < G.V; i++ {
 		if marked[i] == 0 {
 			dfs(i)
@@ -65,8 +67,10 @@ func CC(G graph) int {
 		}
 	}
 	for i := 0; i < G.V; i++ {
-		dfs(i)
-		count++
+		if marked[i] == 0 {
+			dfs(i)
+			count++
+		}
 	}
 	return count
 }

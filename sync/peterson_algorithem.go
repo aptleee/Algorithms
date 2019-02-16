@@ -1,4 +1,4 @@
-package lock
+package sync
 
 var turn int = 0
 var flag = [2]int{0, 0}

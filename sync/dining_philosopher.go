@@ -1,4 +1,4 @@
-package lock
+package sync
 
 
 var chopsticks = [5]semaphore{}

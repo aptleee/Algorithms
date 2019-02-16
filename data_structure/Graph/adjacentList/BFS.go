@@ -1,4 +1,4 @@
-package Graph
+package adjacentList
 
 
 func bfs(G graph, source int){

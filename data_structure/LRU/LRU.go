@@ -77,6 +77,16 @@ func (lru *LRU) removeLast() {
 	lru.last = lru.last.prev
 }
 
+func (lru *LRU) insertToFirst(node *doublyLinkedNode) {
+	if lru.last == nil {
+		lru.last = node
+	} else {
+		node.next = lru.first
+		lru.first.prev = node
+	}
+	lru.first = node
+}
+
 func (lru *LRU) moveToFirst(node *doublyLinkedNode) {
 	switch node {
 	case lru.first:
@@ -90,15 +100,7 @@ func (lru *LRU) moveToFirst(node *doublyLinkedNode) {
 	lru.insertToFirst(node)
 }
 
-func (lru *LRU) insertToFirst(node *doublyLinkedNode) {
-	if lru.last == nil {
-		lru.last = node
-	} else {
-		node.next = lru.first
-		lru.first.prev = node
-	}
-	lru.first = node
-}
+
 
 func main() {
 	lru := NewLRU(2)
