@@ -8,7 +8,7 @@ package Tree
 type color bool
 
 const (
-	RED  color = true
+	RED   color = true
 	BLACK color = false
 )
 
@@ -17,10 +17,10 @@ type Key interface {
 }
 
 type TreeNode struct {
-	Key Key
-	Val interface{}
-	Color color
-	N int
+	Key         Key
+	Val         interface{}
+	Color       color
+	N           int
 	Left, Right *TreeNode
 }
 
@@ -32,7 +32,7 @@ func size(node *TreeNode) int {
 	return node.N
 }
 
-func RotateLeft(node *TreeNode) *TreeNode{
+func RotateLeft(node *TreeNode) *TreeNode {
 	x := node.Right
 	node.Right = x.Left
 	x.Left = node
@@ -43,9 +43,7 @@ func RotateLeft(node *TreeNode) *TreeNode{
 	return x
 }
 
-
-
-func RotateRight(node *TreeNode) *TreeNode{
+func RotateRight(node *TreeNode) *TreeNode {
 	x := node.Left
 	node.Left = x.Right
 	x.Right = node
@@ -65,11 +63,11 @@ func isRed(node *TreeNode) bool {
 	return node.Color == RED
 }
 
-func search(key Key, node *TreeNode) *TreeNode{
+func search(key Key, node *TreeNode) *TreeNode {
 	if node == nil {
 		return nil
 	}
-	if key.Less(node.Key){
+	if key.Less(node.Key) {
 		return search(key, node.Left)
 	} else if !key.Less(node.Key) {
 		return search(key, node.Right)
@@ -108,8 +106,6 @@ func insert(key Key, val interface{}, node *TreeNode) *TreeNode {
 func moveRedLeft(node *TreeNode) {
 
 }
-
-
 
 func (T *RBT) Get(key Key) interface{} {
 	n := search(key, T.root)
