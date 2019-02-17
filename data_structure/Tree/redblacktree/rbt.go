@@ -1,5 +1,10 @@
 package Tree
 
+import (
+	"golang.org/x/net/nettest"
+	"io/ioutil"
+)
+
 // 2-node, 3-node and 4-node
 // red link lean left
 // no node connected by two red links
@@ -13,7 +18,7 @@ const (
 )
 
 type Key interface {
-	Less(i Key) bool
+	Compare(i Key) int
 }
 
 type TreeNode struct {
@@ -67,9 +72,9 @@ func search(key Key, node *TreeNode) *TreeNode {
 	if node == nil {
 		return nil
 	}
-	if key.Less(node.Key) {
+	if key.Compare(node.Key) < 0 {
 		return search(key, node.Left)
-	} else if !key.Less(node.Key) {
+	} else if key.Compare(node.Key) > 0 {
 		return search(key, node.Right)
 	}
 	return node
@@ -80,9 +85,9 @@ func insert(key Key, val interface{}, node *TreeNode) *TreeNode {
 		return nil
 	}
 
-	if key.Less(node.Key) {
+	if key.Compare(node.Key) < 0 {
 		node.Left = insert(key, val, node.Left)
-	} else if !key.Less(node.Key) {
+	} else if key.Compare(node.Key) > 0 {
 		node.Right = insert(key, val, node.Right)
 	} else {
 		node.Val = val
@@ -102,9 +107,81 @@ func insert(key Key, val interface{}, node *TreeNode) *TreeNode {
 	return node
 }
 
-// can only remove 3-node, if it's 2-node, we need to transform
-func moveRedLeft(node *TreeNode) {
+func filpColors(node *TreeNode) {
+	node.Left.Color, node.Right.Color = RED, RED
+	node.Color = BLACK
+}
 
+// can only remove 3-node, if it's 2-node, we need to transform
+func moveRedLeft(node *TreeNode) *TreeNode{
+	filpColors(node)
+	if isRed(node.Right.Left) {
+		node.Right = RotateRight(node.Right)
+		node = RotateLeft(node)
+	}
+	return node
+}
+
+func moveRedRight(node *TreeNode) *TreeNode{
+	// assuming node is red, node.right and node.right.left is black
+	flipColor(node)
+	if !isRed(node.Left.Left) {
+		node = RotateRight(node)
+	}
+	return node
+}
+
+
+func balance(node *TreeNode) *TreeNode {
+
+}
+
+
+
+func deleteMin(node *TreeNode) *TreeNode {
+	if node.Left == nil {
+		return nil
+	}
+	if !isRed(node.Left) && !isRed(node.Left.Left) {
+		node = moveRedLeft(node)
+	}
+	node.Left = deleteMin(node.Left)
+	return balance(node)
+}
+
+func min(node *TreeNode) *TreeNode {
+	cur := node
+	for cur.Left != nil {
+		cur = cur.Left
+	}
+	return cur
+}
+
+func delete(key Key, node *TreeNode) *TreeNode {
+	if key.Compare(node.Key) < 0 {
+		if !isRed(node.Left) && !isRed(node.Left.Left){
+			node = moveRedLeft(node)
+		}
+		node.Left = delete(key, node.Left)
+	} else {
+		if isRed(node.Left) { // leaf node
+			node = RotateRight(node)
+		}
+		if key.Compare(node.Key) == 0 && node.Right == nil { // leaf node
+			return nil
+		}
+		if !isRed(node.Right) && !isRed(node.Right.Left) { // in the middle
+			node = moveRedRight(node)
+		}
+		if key.Compare(node.Key) == 0 {
+			node.Val = search(min(node.Right).Key, node.Right)
+			node.Key = min(node.Right).Key
+			node.Right = deleteMin(node.Right)
+		} else {
+			node.Right = delete(key, node.Right)
+		}
+	}
+	return balance(node)
 }
 
 func (T *RBT) Get(key Key) interface{} {
