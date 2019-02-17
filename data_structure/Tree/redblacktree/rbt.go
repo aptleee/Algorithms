@@ -1,9 +1,5 @@
 package Tree
 
-import (
-	"golang.org/x/net/nettest"
-	"io/ioutil"
-)
 
 // 2-node, 3-node and 4-node
 // red link lean left
