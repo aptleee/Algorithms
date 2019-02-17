@@ -6,11 +6,12 @@ type graph struct {
 	V int
 	E int
 	adj []list.List
+	id []int
 }
 
 func New(V, E int) graph {
 	return graph{
-		V, E, make([]list.List, V),
+		V, E, make([]list.List, V), make([]int, V),
 	}
 }
 
@@ -30,7 +31,6 @@ func dfsOrder() ([]int, []int, []int) {
 		}
 		post = append(post, v)
 	}
-
 
 	for i := 0; i < G.V; i++ {
 		if marked[i] == 0 {
@@ -60,6 +60,7 @@ func CC(G graph) int {
 	var dfs func(i int)
 	dfs = func(i int) {
 		marked[i] = 1
+		G.id[i] = count
 		for _, x := range G.adj[i] {
 			if marked[x] == 0 {
 				dfs(x)
@@ -73,4 +74,32 @@ func CC(G graph) int {
 		}
 	}
 	return count
+}
+
+func (G *graph) connected(v, w int) bool {
+	return G.id[v] == G.id[w]
+}
+
+func twoColor(G graph) bool {
+	color := make([]bool, G.V)
+	marked := make([]int, G.V)
+	var dfs func(i int)
+	isTwoColor := true
+	dfs = func(i int)  {
+		marked[i] = 1
+		for _, x := range G.adj[i] {
+			if marked[x] == 0 {
+				color[x] = !color[i]
+				dfs(x)
+			} else if color[i] == color[x] {
+				isTwoColor = false
+			}
+		}
+	}
+	for i := 0; i < G.V; i++ {
+		if marked[i] == 0 {
+			dfs(i)
+		}
+	}
+	return isTwoColor
 }
