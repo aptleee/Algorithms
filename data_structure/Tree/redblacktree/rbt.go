@@ -129,7 +129,17 @@ func moveRedRight(node *TreeNode) *TreeNode{
 
 
 func balance(node *TreeNode) *TreeNode {
+	if isRed(node.Right) && !isRed(node.Left) {
+		node = RotateLeft(node)
+	} else if isRed(node.Left) && isRed(node.Left.Left) {
+		node = RotateRight(node)
+	} else if isRed(node.Left) && isRed(node.Right) { // decompose 4-node
+		flipColor(node)
+	}
 
+	node.N = 1 + size(node.Left) + size(node.Right)
+
+	return node
 }
 
 
