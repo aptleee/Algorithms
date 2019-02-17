@@ -102,12 +102,26 @@ type chainedHashTable struct {
 	Table []linkedlist.DoublyLinkedList
 }
 
-func New() *chainedHashTable {
+func New(M int) *chainedHashTable {
 	return &chainedHashTable{
 		N: 0,
-		M: 31,
+		M: M,
 		Table: make([]linkedlist.DoublyLinkedList, 31),
 	}
+}
+
+
+
+func (ta *chainedHashTable) resize(m int) {
+	t := New(m)
+	for i := 0; i < m; i++ {
+		for k := range ta.Table[i] {
+			t.Put(k, ta.Table[i].Search(k))
+		}
+	}
+	ta.M = t.M
+	ta.N = t.N
+	ta.Table = t.Table
 }
 
 func (ta *chainedHashTable) Get(key hash) interface{} {
@@ -120,6 +134,9 @@ func (ta *chainedHashTable) Get(key hash) interface{} {
 }
 
 func (ta *chainedHashTable) Put(key hash, v int) {
+	if ta.N > 8*ta.M {
+		ta.resize(2*ta.M)
+	}
 	a := ta.Table[key.hash(ta.M)].Search(key)
 	if a == nil {
 		ta.Table[key.hash(ta.M)].AddAtBeg(key, v)
@@ -127,6 +144,7 @@ func (ta *chainedHashTable) Put(key hash, v int) {
 	} else {
 			a.Val = v
 	}
+
 }
 
 func (ta *chainedHashTable) Delete(key hash) interface{} {
@@ -136,8 +154,12 @@ func (ta *chainedHashTable) Delete(key hash) interface{} {
 	} else {
 		ta.Table[key.hash(ta.M)].Delete(key)
 		ta.N--
+		if ta.N <= 2*ta.M {
+			ta.resize(ta.M/2)
+		}
 		return a
 	}
+
 }
 
 
