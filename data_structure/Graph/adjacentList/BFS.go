@@ -2,7 +2,7 @@ package adjacentList
 
 
 func bfs(G graph, source int){
-	q := make([]int, 1)
+	q := make([]int, 0)
 	marked := make([]int, G.V)
 	edgeTo := make([]int, G.V)
 	q = append(q, source)
