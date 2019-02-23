@@ -1,6 +1,8 @@
 package adjacentList
 
-import "container/list"
+import (
+	"container/list"
+)
 
 type graph struct {
 	V int
@@ -83,8 +85,8 @@ func (G *graph) connected(v, w int) bool {
 func twoColor(G graph) bool {
 	color := make([]bool, G.V)
 	marked := make([]int, G.V)
-	var dfs func(i int)
 	isTwoColor := true
+	var dfs func(i int)
 	dfs = func(i int)  {
 		marked[i] = 1
 		for _, x := range G.adj[i] {
@@ -102,4 +104,32 @@ func twoColor(G graph) bool {
 		}
 	}
 	return isTwoColor
+}
+
+
+func findDirectedCycle(G graph) bool {
+	marked := make([]bool, G.V)
+	onStack := make([]bool, G.V)
+	hasCycle := false
+	var dfs func(s int)
+	dfs = func(s int) {
+		onStack[s] = true
+		marked[s] = true
+		for _, x := range G.adj[s] {
+			if !marked[x]{
+				dfs(x)
+			} else if onStack[x] {
+				hasCycle = true
+			}
+		}
+		onStack[s] = false
+	}
+
+	for i := 0; i < G.V; i++ {
+		if !marked[i] {
+			dfs(i)
+		}
+	}
+	return hasCycle
+
 }

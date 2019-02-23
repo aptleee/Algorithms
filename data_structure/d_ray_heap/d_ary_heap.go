@@ -1,6 +1,6 @@
 package d_ray_heap
 
-import "github/aptlee/swap"
+import "OS_and_Networks_in_golang/aptlee/swap"
 import "fmt"
 import "math"
 

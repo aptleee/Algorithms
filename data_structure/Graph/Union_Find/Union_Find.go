@@ -16,6 +16,10 @@ func New(n int) *UF {
 	return u
 }
 
+func (u *UF) connected(i, j int) bool {
+	return u.friends[i] == u.friends[j]
+}
+
 func (u *UF) find(i int) int{
 	for i != u.friends[i]{
 		i = u.friends[i]

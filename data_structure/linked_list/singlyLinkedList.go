@@ -224,6 +224,44 @@ func (sl *singlyLinkedList) IsCicular() bool {
 	}
 	return true
 }
+
+func detectCyclev2(head *singlyLinkedNode) *singlyLinkedNode {
+	if head == nil || head.next == nil {
+		return nil
+	}
+
+	us := make(map[*singlyLinkedNode]struct{})
+	cur := head
+	for cur != nil {
+		if _, ok := us[cur]; ok {
+			return cur
+		}
+		us[cur] = struct{}{}
+		cur = cur.next
+	}
+	return cur
+}
+
+func detectCycle(head *singlyLinkedNode) *singlyLinkedNode {
+	if head == nil || head.next == nil {
+		return nil
+	}
+	entry, slow, fast := head, head, head
+	for fast == nil || fast.next == nil {
+		slow = slow.next
+		fast = fast.next.next
+		if slow == fast {
+			for slow != entry {
+				slow = slow.next
+				entry = entry.next
+			}
+			return entry
+		}
+	}
+	return nil
+}
+
+
 func smerge(l1 singlyLinkedList, l2 singlyLinkedList) singlyLinkedList {
 	dummy := NewNode(0)
 	cur := dummy

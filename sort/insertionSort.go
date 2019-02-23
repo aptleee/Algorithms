@@ -79,16 +79,19 @@ func binarySearch(A []int, target int, lo, hi int) int {
 	return -1
 }
 
-//func search(A []int, target int) int { // search the idx of the smallest one in the rotated array
-//	lo, hi := 0, len(A)-1
-//	for lo < hi { // when lo == hi break the loop
-//		mid := (lo + hi) / 2
-//		if A[mid] > A[hi] {
-//			lo = mid + 1
-//		} else {
-//			hi = mid
-//		}
-//	}
+func search(A []int) int { // search the idx of the smallest one in the rotated array
+	lo, hi := 0, len(A)-1
+	for lo < hi { // when lo == hi break the loop
+		mid := (lo + hi) / 2
+		if A[mid] > A[hi] {
+			lo = mid + 1
+		} else {
+			hi = mid
+		}
+	}
+	return lo
+}
+
 //	root := lo
 //	lo, hi = 0, len(A)-1
 //	for lo <= hi {

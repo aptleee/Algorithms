@@ -1,4 +1,6 @@
-package mystring
+package main
+
+import "fmt"
 
 func Reverse(s string) string {
 	r := []rune(s)
@@ -10,3 +12,4 @@ func Reverse(s string) string {
 	}
 	return string(r)
 }
+

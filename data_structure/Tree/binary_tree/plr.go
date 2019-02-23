@@ -34,6 +34,34 @@ func preorder(root *node) {
 	}
 }
 
+func leftMost(n *node) *node {
+	if n == nil {
+		return nil
+	}
+	for n.left != nil {
+		n = n.left
+	}
+	return n
+}
+
+func successor(n *node) *node{
+	if n == nil {
+		return nil
+	}
+	if n.right != nil {
+		return leftMost(n.right)
+	}
+	y := n.parent
+	for y != nil && n == y.right {
+		n = y
+		y = y.parent
+	}
+	return y
+}
+
+
+
+
 func main() {
 	n1 := &node{key:1}
 	n2 := &node{key:2}

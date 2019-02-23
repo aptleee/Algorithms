@@ -214,6 +214,29 @@ func LevelOrderv2(root *TreeNode) [][]int {
 	return res
 }
 
+func Levels(root *TreeNode) int {
+	q := make([]*TreeNode, 0)
+	q = append(q, root)
+	level := 0
+	for len(q) > 0 {
+		m := len(q)
+		for i := 0; i < m; i++ {
+			n := q[0]
+			q = q[1:]
+			if n.Left != nil {
+				q = append(q, n.Left)
+			}
+			if n.Right != nil {
+				q = append(q, n.Right)
+			}
+		}
+		level++
+	}
+	return level
+}
+
+
+
 func LevelOrderv3(root *TreeNode) [][]int {
 	res := [][]int{}
 	var dfs func(*TreeNode, int)
@@ -415,6 +438,24 @@ func buildTree(preorder []int, inorder []int) *TreeNode { // inorder and preorde
 	return root
 }
 
+func getPost(preorder []int, inorder []int) []int {
+	ret := make([]int, 0)
+	var helper func(preorder []int, inorder []int)
+	helper = func(preorder []int, inorder []int) {
+		if len(preorder) <= 0 {
+			return
+		}
+		target := preorder[0]
+		idx := findv2(inorder, target)
+		helper(preorder[1:idx+1], inorder[:idx])
+		helper(preorder[idx+1:], inorder[idx+1:])
+		ret = append(ret, target)
+	}
+	helper(preorder, inorder)
+	return ret
+}
+
+
 func buildTreev2(preorder []int, inorder []int) *TreeNode {
 	if len(preorder) == 0 {
 		return nil
@@ -582,10 +623,14 @@ func main() {
 	//fmt.Println()
 	//fmt.Println(Serializev2(t.root))
 	//a := Deserializev2(Serializev2(t.root))
-	in := []int{9,3,15,20,7}
-	pre := []int{3,9,20,15,7}
-	a := Construct(in, pre)
-	PreOrder(a)
+	//in := []int{9,3,15,20,7}
+	//pre := []int{3,9,20,15,7}
+	//a := Construct(in, pre)
+	//PreOrder(a)
+	//fmt.Println(Levels(a))
+	in := []int {4, 2, 5, 1, 3, 6}
+	pre := []int {1, 2, 4, 5, 3, 6}
+	fmt.Println(getPost(pre, in))
 	////fmt.Println("root1 is symmetric", IsSymmetric(root1))
 	//fmt.Println("is SameTree", SameTree(t.root, a))
 	////Invertv2(root1)

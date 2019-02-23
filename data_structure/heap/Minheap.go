@@ -6,6 +6,8 @@ type heap interface {
 	Less(i, j int) bool
 	Swap(i, j int)
 	Len() int
+	Push(x interface{})
+	Pop() interface{}
 }
 
 func buildHeap(h heap) {
@@ -18,11 +20,12 @@ func buildHeap(h heap) {
 func up(h heap, i int) {
 	for {
 		j := (i-1)/2
-		if j < 0 || h.Less(i, j) {
+
+		if j == i || !h.Less(i, j) {
 			break
 		}
 		h.Swap(i, j)
-		j = i
+		i = j
 	}
 }
 
@@ -77,6 +80,18 @@ func HeapSortv2(h heap) {
 
 }
 
+func Push(h heap, x interface{}) {
+	h.Push(x)
+	up(h, h.Len()-1)
+}
+
+func Pop(h heap) interface{} {
+	n := h.Len() - 1
+	h.Swap(0, n)
+	down(h, 0, n)
+	return h.Pop()
+}
+
 type tmp []int
 
 func (t tmp) Len() int {
@@ -87,15 +102,45 @@ func (t tmp) Swap(i, j int) {
 	t[i], t[j] = t[j], t[i]
 }
 
-func (t tmp) Less(i, j int) bool {
-	return t[i] > t[j]
+func (t tmp) Front() interface{} {
+	return t[0]
 }
 
-func main() {
-	a := tmp{2, 3, 1, 4, 9, 6, 5}
+func (t tmp) Less(i, j int) bool {
+	return t[i] < t[j]
+}
 
-	buildHeap(a)
-	fmt.Println(a)
-	HeapSortv2(a)
-	fmt.Println(a)
+func (t *tmp) Push(x interface{}) {
+	*t = append(*t, x.(int))
+}
+
+func (t *tmp) Pop() interface{} {
+	old := *t
+	n := len(old)
+	x := old[n-1]
+	*t = old[0 : n-1]
+	return x
+}
+
+func TopM(M int, input []int) *tmp{
+	MinQ := &tmp{}
+
+	buildHeap(MinQ)
+	for _, x := range input {
+		if MinQ.Len() < M {
+			Push(MinQ, x)
+		} else if x > MinQ.Front().(int) {
+			Pop(MinQ)
+			Push(MinQ, x)
+		}
+	}
+	return MinQ
+}
+
+
+func main() {
+	input := []int{1, 3, 4, 9, 10, 5, 7, 4, 9, 10, 22, 33, 99, 1, 100, 98}
+
+	r :=TopM(3, input)
+	fmt.Println(*r)
 }

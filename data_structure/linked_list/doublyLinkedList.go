@@ -10,6 +10,7 @@ type doublyLinkedNode struct {
 	Key interface{}
 }
 
+
 type DoublyLinkedList struct {
 	head *doublyLinkedNode
 }
@@ -19,6 +20,18 @@ func New(k interface{},v int) *doublyLinkedNode {
 		Val: v,
 		Key:k,
 	}
+}
+
+func (dl *DoublyLinkedList) Front() *doublyLinkedNode {
+	return dl.head
+}
+
+func (n *doublyLinkedNode) Next() *doublyLinkedNode {
+	return n.next
+}
+
+func (n *doublyLinkedNode) Pre() *doublyLinkedNode {
+	return n.prev
 }
 
 func (dl *DoublyLinkedList) Search(k interface{}) *doublyLinkedNode{

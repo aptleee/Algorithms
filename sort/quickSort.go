@@ -15,9 +15,9 @@ func partition(A []int, lo, hi int) int{
 	return i+1
 }
 
-func randomPartition(A []int, lo, hi int) int {
-
-}
+//func randomPartition(A []int, lo, hi int) int {
+//
+//}
 func Quick3Way(A []int, lo, hi int) int{
 	k := A[lo]
 	lt, i, gt := lo, lo+1, hi // A[lo-lt) < k, A[lt-i) == k, A(gt-hi] > k, A[i-gt] to be checked
@@ -71,12 +71,30 @@ func QuickSortv2(A []int, lo, hi int) {
 		QuickSort(A, q+1, hi)
 	}
 }
+
+func Select(A []int, k int) int {
+	lo, hi := 0, len(A) - 1
+
+	for hi >= lo {
+		j := partition(A, lo, hi)
+		if j == k {
+			return A[k]
+		} else if j > k {
+			hi = j - 1
+		} else {
+			lo = j + 1
+		}
+	}
+	return A[k]
+
+}
 		
 func main() {
 	A := []int{1, 2, 5, 2, 3, 5, 7, 1, 9}
-	QuickSort(A, 0, len(A)-1)
-	fmt.Println(A)
-	A = []int{1, 2, 5, 2, 3, 5, 7, 1, 9}
-	QuickSortv2(A, 0, len(A)-1)
-	fmt.Println(A)
+	//QuickSort(A, 0, len(A)-1)
+	//fmt.Println(A)
+	//A = []int{1, 2, 5, 2, 3, 5, 7, 1, 9}
+	//QuickSortv2(A, 0, len(A)-1)
+	//fmt.Println(A)
+	fmt.Println(Select(A, 6))
 }

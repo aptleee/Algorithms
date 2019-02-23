@@ -115,8 +115,8 @@ func New(M int) *chainedHashTable {
 func (ta *chainedHashTable) resize(m int) {
 	t := New(m)
 	for i := 0; i < m; i++ {
-		for k := range ta.Table[i] {
-			t.Put(k, ta.Table[i].Search(k))
+		for n := ta.Table[i].Front(); n != nil; n = n.Next() {
+			t.Put(n.Key, ta.Table[i].Search(n.Key))
 		}
 	}
 	ta.M = t.M
