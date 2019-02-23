@@ -18,8 +18,8 @@ func New(V, E int) graph {
 }
 
 func dfsOrder() ([]int, []int, []int) {
-	pre := make([]int, 1)  //  queue
-	post := make([]int, 1) // queue
+	pre := make([]int, 0)  //  queue
+	post := make([]int, 0) // queue
 	G := graph{}
 	marked := make([]int, G.V)
 	var dfs func(v int)
