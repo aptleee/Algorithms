@@ -9,6 +9,9 @@ func FindDirectedCycle(G graph) bool {
 		onStack[s] = true
 		marked[s] = true
 		for _, x := range G.adj[s] {
+			if hasCycle == true {
+				return
+			}
 			if !marked[x]{
 				dfs(x)
 			} else if onStack[x] {
