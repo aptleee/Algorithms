@@ -9,12 +9,12 @@ type graph struct {
 
 }
 
-func dfs(G graph) {
+func dfs(G graph) []int {
 	if findDirectedCycle(G) {
 		return
 	}
 	marked := make([]bool, G.V)
-	ret := make([]int, 0)
+	order := make([]int, 0)
 	var dfs func(s int)
 	dfs = func(s int) {
 		marked[s] = true
@@ -23,14 +23,27 @@ func dfs(G graph) {
 				dfs(x)
 			}
 		}
-		ret = append(ret, s)
+		order = append(order, s)
 	}
 	for  i := 0; i < G.V; i++ {
 		if !marked[i] {
 			dfs(i)
 		}
 	}
+	reverse(order)
+	return order
 }
+
+func reverse(A []int) {
+	i, j := 0, len(A)-1
+	for i < j {
+		A[i], A[j] = A[j], A[i]
+		i++
+		j--
+	}
+}
+
+
 
 func bfs(G graph) {}
 
@@ -43,6 +56,9 @@ func findDirectedCycle(G graph) bool {
 		onStack[s] = true
 		marked[s] = true
 		for _, x := range G.adj[s] {
+			if hasCycle {
+				return
+			}
 			if !marked[x]{
 				dfs(x)
 			} else if onStack[x] {
