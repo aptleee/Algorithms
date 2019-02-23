@@ -26,7 +26,7 @@ func dfsOrder() ([]int, []int, []int) {
 	dfs = func(v int) {
 		pre = append(pre, v)
 		marked[v] = 1
-		for w := range G.adj {
+		for w := range G.adj[v] {
 			if marked[w] == 0 {
 				dfs(w)
 			}
