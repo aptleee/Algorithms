@@ -1,22 +1,15 @@
-package main
-
-import (
-	"fmt"
-	"os"
-	"strconv"
-)
+package sort
 
 
-
-func insertionSort(array []float64) {
-	for i := 1; i < len(array); i++ {
-		key := array[i]
+func insertionSort(A []float64) {
+	for i := 1; i < len(A); i++ {
+		key := A[i]
 		j := i - 1
-		for j >= 0 && array[j] > key {
-			array[j+1] = array[j]
+		for j >= 0 && A[j] > key {
+			A[j+1] = A[j]
 			j--
 		}
-		array[j+1] = key
+		A[j+1] = key
 	}
 }
 
@@ -56,14 +49,5 @@ func bucketSort(array []float64, bucketSize int) []float64 {
 
 func main() {
 
-	array :=[]float64{4, 1, 1, 3, 2, 2, 7, -6, 0}
-	for _, arg := range os.Args[1:] {
-		if n, err := strconv.ParseFloat(arg, 64); err == nil {
-			array = append(array, n)
-		}
-	}
-	fmt.Printf("Before Bucket Sort %v\n", array)
-	array = bucketSort(array, 5)
-	fmt.Printf("After Bucket Sort %v\n", array)
 }
 

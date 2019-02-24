@@ -1,11 +1,7 @@
 package sort
 
-"bufio"
 
 //In the worst case scenario (reverse-sorted input), to ``insert" the i-th element, you need roughly log2i comparisons and i shifts.
-import (
-	"fmt"
-)
 
 func Sort(A []int) {
 	n := len(A)
