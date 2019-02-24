@@ -7,6 +7,7 @@ import (
 )
 
 func partition(A []int, lo, hi int) int{
+	Shuffle(A)
 	k := A[hi]
 	i := lo - 1
 	for j := lo; j < hi; j++ { // A[lo, i] <= k, A(i, j) > k, A[j, hi] to be checked
@@ -19,10 +20,12 @@ func partition(A []int, lo, hi int) int{
 	return i+1
 }
 
-//func randomPartition(A []int, lo, hi int) int {
-//
-//}
+
 func Quick3Way(A []int, lo, hi int) int{
+	r := rand.New(rand.NewSource(time.Now().Unix()))
+	idx := r.Intn(len(A))
+	A[lo], A[idx] = A[idx], A[lo]
+
 	k := A[lo]
 	lt, i, gt := lo, lo+1, hi // A[lo-lt) < k, A[lt-i) == k, A(gt-hi] > k, A[i-gt] to be checked
 	for i <= gt {
