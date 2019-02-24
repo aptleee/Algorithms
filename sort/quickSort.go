@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
 
 func partition(A []int, lo, hi int) int{
 	k := A[hi]
@@ -88,13 +92,19 @@ func Select(A []int, k int) int {
 	return A[k]
 
 }
-		
+
+func Shuffle(vals []int) {
+	r := rand.New(rand.NewSource(time.Now().Unix()))
+	for n := len(vals); n > 0; n-- {
+		idx := r.Intn(n)
+		vals[n-1], vals[idx] = vals[idx], vals[n-1]
+	}
+}
+
+
 func main() {
-	A := []int{1, 2, 5, 2, 3, 5, 7, 1, 9}
-	//QuickSort(A, 0, len(A)-1)
-	//fmt.Println(A)
-	//A = []int{1, 2, 5, 2, 3, 5, 7, 1, 9}
-	//QuickSortv2(A, 0, len(A)-1)
-	//fmt.Println(A)
-	fmt.Println(Select(A, 6))
+	A := []int { 2, 1, 4, 3, 9, 6, 4}
+	Shuffle(A)
+	fmt.Println(A)
+
 }
