@@ -1,4 +1,4 @@
-package mysort
+package main
 
 import (
 	"fmt"
@@ -7,7 +7,6 @@ import (
 )
 
 func partition(A []int, lo, hi int) int{
-	Shuffle(A)
 	k := A[hi]
 	i := lo - 1
 	for j := lo; j < hi; j++ { // A[lo, i] <= k, A(i, j) > k, A[j, hi] to be checked
@@ -71,7 +70,7 @@ func QuickSort(A []int, lo, hi int) {
 	}
 }
 
-func QuickSortv2(A []int, lo, hi int) {
+func QuickSort2(A []int, lo, hi int) {
 	if lo < hi {
 		q := Quick3Way(A, lo, hi)
 		QuickSort(A, lo, q-1)
@@ -115,7 +114,6 @@ func Shuffle2(A []int) {
 
 func main() {
 	A := []int { 2, 1, 4, 3, 9, 6, 4}
-	Shuffle(A)
+	QuickSort(A, 0, len(A)-1)
 	fmt.Println(A)
-
 }
