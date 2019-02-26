@@ -53,40 +53,20 @@ func Merge(A []int, lo, i, hi int) int {
 	return count
 }
 
-func me(A, left, right []int) int {
-	n1 := len(left)
-	n2 := len(right)
-	m, n, count := 0, 0, 0
-	for m < n1 || n < n2 {
-		if m == n1 {
-			A[m+n] = right[n]
-			n++
-		} else if n == n2 {
-				A[m+n] = left[m]
-				m++
-		} else if left[m] <= right[n] {
-					A[m+n] = left[m]
-					m++
-		} else {
-						A[m+n] = right[n]
-						n++
-						count += n1 - m
-		}
-	}
-	return count
-}
-
 
 func MergeSort(A []int, lo, hi int) {
 	if lo < hi {
 		q := (lo+hi)/2
 		MergeSort(A, lo, q)
 		MergeSort(A, q+1, hi)
+		if A[q] <= A[q+1] {
+			return
+		}
 		merge(A, lo, q, hi)
 	}
 }
 
-func MergeSortv2(A []int) {
+func MergeSort2(A []int) {
 	n := len(A)
 	for sz := 1; sz < n; sz = sz * 2 {
 		for i := 0; i < n-sz; i += 2*sz {
@@ -105,22 +85,18 @@ func min(a, b int) int {
 
 
 
-func inversionCount(A []int) int {
-	if len(A) >= 2 {
-		q := (len(A)-1)/2
-		B := make([]int, q+1)
-		C := make([]int, len(A)-q-1)
-		copy(B, A[:q+1])
-		copy(C, A[q+1:])
-		a := inversionCount(B)
-		b := inversionCount(C)
-		c := me(A, B, C)
-		return a+b+c
+func inversionCount(A []int, lo, hi int) int {
+	if lo < hi {
+		q := (lo+hi)/2
+		c1 := inversionCount(A, lo, q)
+		c2 := inversionCount(A, q+1, hi)
+		c3 := Merge(A, lo, q, hi)
+		return c1+c2+c3
 	}
 	return 0
 }
 
 func main() {
 	A := []int{5, 2, 3, 4, 5}
-	fmt.Println(A, inversionCount(A))
+	fmt.Println(A, inversionCount(A, 0, len(A)-1))
 }
