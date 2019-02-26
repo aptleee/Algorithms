@@ -95,6 +95,7 @@ package hashTable
 // M = 31
 import (
 	"AlgorithmsGo-master/data_structure/linked_list"
+	"hash/fnv"
 )
 
 type chainedHashTable struct {
@@ -163,6 +164,8 @@ func (ta *chainedHashTable) Delete(key hash) interface{} {
 }
 
 
-
-
-
+func ihash(s string) int {
+	h := fnv.New32a()
+	h.Write([]byte(s))
+	return int(h.Sum32()&0x7fffffff)
+}

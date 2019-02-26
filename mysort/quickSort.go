@@ -80,7 +80,6 @@ func QuickSort2(A []int, lo, hi int) {
 
 func Select(A []int, k int) int {
 	lo, hi := 0, len(A) - 1
-
 	for hi >= lo {
 		j := partition(A, lo, hi)
 		if j == k {
