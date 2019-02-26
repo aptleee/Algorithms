@@ -170,7 +170,7 @@ func delete(key Key, node *TreeNode) *TreeNode {
 		}
 		node.Left = delete(key, node.Left)
 	} else {
-		if isRed(node.Left) { // leaf node
+		if isRed(node.Left) {
 			node = RotateRight(node)
 		}
 		if key.Compare(node.Key) == 0 && node.Right == nil { // leaf node
