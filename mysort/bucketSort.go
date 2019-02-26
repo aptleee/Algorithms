@@ -1,4 +1,4 @@
-package sort
+package mysort
 
 
 func insertionSort(A []float64) {

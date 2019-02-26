@@ -1,4 +1,4 @@
-package sort
+package mysort
 
 
 //In the worst case scenario (reverse-sorted input), to ``insert" the i-th element, you need roughly log2i comparisons and i shifts.
