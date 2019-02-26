@@ -46,9 +46,8 @@ func searchInsert(A []int, target int) int {
 
 func rank(A []int, target int) int { // the same as searchInsert, which
 	lo, hi := 0, len(A)-1
-	mid := 0
 	for lo <= hi {
-		mid = (lo + hi) / 2
+		mid := (lo + hi) / 2
 		if target > A[mid] {
 			lo = mid + 1
 		} else if target < A[mid] {

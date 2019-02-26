@@ -104,6 +104,14 @@ func Shuffle(vals []int) {
 	}
 }
 
+func Shuffle2(A []int) {
+	r := rand.New(rand.NewSource(time.Now().Unix()))
+	for i := 0; i < len(A); i++ {
+		idx := r.Intn(len(A)-i)+i
+		A[i], A[idx] = A[idx], A[i]
+	}
+}
+
 
 func main() {
 	A := []int { 2, 1, 4, 3, 9, 6, 4}
