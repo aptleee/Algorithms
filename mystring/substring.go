@@ -1,4 +1,6 @@
-package mystring
+package main
+
+import "fmt"
 
 func bruteForce(s, p string) int {
 	m, n := len(s), len(p)
@@ -30,7 +32,7 @@ func KMP(s, p string) int {
 	}
 
 	dfa[p[0]][0] = 1
-	for x, j := 0, 1; j < m; j++ {
+	for x, j := 0, 1; j < m; j++ { // x is the state
 		for c := 0; c < R; c++ {
 			dfa[c][j] = dfa[c][x]
 		}
@@ -49,4 +51,15 @@ func KMP(s, p string) int {
 		return n
 	}
 	return search(s)
+}
+
+
+func RC(s, p string) int {
+
+}
+
+func main() {
+	s, p := "nihao", "ha"
+	fmt.Println(bruteForce(s, p))
+	fmt.Println(KMP(s, p))
 }
