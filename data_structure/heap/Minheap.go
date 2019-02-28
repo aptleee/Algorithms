@@ -102,10 +102,6 @@ func (t tmp) Swap(i, j int) {
 	t[i], t[j] = t[j], t[i]
 }
 
-func (t tmp) Front() interface{} {
-	return t[0]
-}
-
 func (t tmp) Less(i, j int) bool {
 	return t[i] < t[j]
 }
@@ -124,18 +120,16 @@ func (t *tmp) Pop() interface{} {
 
 func TopM(M int, input []int) *tmp{
 	MinQ := &tmp{}
-
 	buildHeap(MinQ)
 	for _, x := range input {
-		if MinQ.Len() < M {
-			Push(MinQ, x)
-		} else if x > MinQ.Front().(int) {
+		Push(MinQ, x)
+		if MinQ.Len() > M {
 			Pop(MinQ)
-			Push(MinQ, x)
 		}
 	}
 	return MinQ
 }
+
 
 
 func main() {
