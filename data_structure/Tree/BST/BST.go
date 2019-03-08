@@ -5,8 +5,8 @@
 package main
 
 import (
-	"AlgorithmsGo-master/data_structure/queue/queuev2"
-	"AlgorithmsGo-master/data_structure/stack/stackv2"
+	"Algorithms/data_structure/queue/queuev2"
+	"Algorithms/data_structure/stack/stackv2"
 	"fmt"
 	"math"
 	"strconv"
@@ -299,15 +299,15 @@ func bst_delete(root *node, Key int) *node { // if not found, nothing changed
 	return root
 }
 
-func _calculate_depth(n *node, depth int) int {
+func calculate_depth(n *node, depth int) int {
 	if n == nil {
 		return depth
 	}
-	return max(_calculate_depth(n.Left, depth+1), _calculate_depth(n.Right, depth+1))
+	return max(calculate_depth(n.Left, depth+1), calculate_depth(n.Right, depth+1))
 }
 
 func (t *BST) depth() int {
-	return _calculate_depth(t.root, 0)
+	return calculate_depth(t.root, 0)
 }
 
 func (t *BST) Show()  {
@@ -342,7 +342,7 @@ func generating(start, end int) []*node {
 		r := generating(i+1, end)
 		for j := 0; j < len(l); j++ {
 			for k := 0; k < len(r); k++ {
-				root := newNode(i, 0)
+				root := newNode(i, 0, 0)
 				root.Left = l[j]
 				root.Right = r[k]
 				res = append(res, root)
@@ -395,6 +395,34 @@ func serialize(n *node) string { // preorder
 	return s[:len(s)-1]
 }
 
+func inorderSuccessor(root *node, p *node) *node {
+	if root == nil {
+		return nil
+	}
+	if root.Val <= p.Val {
+		return inorderSuccessor(root.Right, p)
+	}
+	t := inorderSuccessor(root.Left, p)
+	if t != nil {
+		return t
+	}
+	return root
+}
+
+func inorderPredessor(root *node, p *node) *node {
+	if root == nil {
+		return nil
+	}
+	if root.Val >= p.Val {
+		return inorderPredessor(root.Left, p)
+	}
+	t := inorderPredessor(root.Right, p)
+	if t != nil {
+		return t
+	}
+	return root
+}
+
 func deserialize(pre string) *node{ // preorder
 	q := queuev2.New()
 	for _, e := range strings.Split(pre, " ") {
@@ -407,7 +435,7 @@ func deserialize(pre string) *node{ // preorder
 			return nil
 		}
 		b := q.Dequeue().(int)
-		root := newNode(0, b)
+		root := newNode(0, b, 0)
 		root.Left = builder(root.Key)
 		root.Right = builder(maxVal)
 		return root
@@ -415,7 +443,32 @@ func deserialize(pre string) *node{ // preorder
 	return builder(math.MaxInt32)
 }
 
+func lowestCommonAncestor(root, p, q *node) *node {
+	if root == nil {
+		return nil
+	}
+	for {
+		if (root.Val - q.Val)*(root.Val - p.Val) <= 0 {
+			return root
+		}
+		if root.Val > q.Val {
+			root = root.Left
+		} else {
+			root = root.Right
+		}
+	}
+}
 
+func sumOfLeftLeaves(root *node) int {
+	if root == nil {
+		return 0
+	}
+	if root.Left != nil && root.Left.Left == nil && root.Left.Right == nil {
+		return sumOfLeftLeaves(root.Right) + 1
+	}
+	return sumOfLeftLeaves(root.Left) + sumOfLeftLeaves(root.Right)
+
+}
 
 //func serializev2(*node) []int { //postorder
 //

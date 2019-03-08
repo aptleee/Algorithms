@@ -36,11 +36,8 @@ func KMP(s, p string) int {
 		for c := 0; c < R; c++ {
 			dfa[c][j] = dfa[c][x]
 		}
-		fmt.Print( string(p[j]))
 		dfa[p[j]][j] = j+1
 		x = dfa[p[j]][x]
-		fmt.Println(" x == ", x)
-
 	}
 
 	search := func(s string) int {

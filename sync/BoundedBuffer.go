@@ -2,7 +2,7 @@ package sync
 
 type semaphore chan int
 
-func new(n int) semaphore {
+func New(n int) semaphore {
 	sem := make(chan int, n)
 	return sem
 }
@@ -37,9 +37,9 @@ type BoundedBuf struct {
 
 
 func Init(n int) BoundedBuf {
-	empty := new(n)
-	full := new(0)
-	lock := new(1)
+	empty := New(n)
+	full := New(0)
+	lock := New(1)
 	return BoundedBuf{
 		empty:empty,
 		full:full,

@@ -1,10 +1,11 @@
 package main
 
 import (
-	"AlgorithmsGo-master/data_structure/queue/queuev2"
-	"AlgorithmsGo-master/data_structure/stack/stackv2"
+	"Algorithms/data_structure/queue/queuev2"
+	"Algorithms/data_structure/stack/stackv2"
 	"container/list"
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -372,24 +373,28 @@ func Invert(root *TreeNode) *TreeNode{
 	return root
 }
 
-func Invertv2(root *TreeNode) *TreeNode {
+func invertTree(root *TreeNode) *TreeNode {
 	if root == nil {
 		return nil
 	}
-	q := queuev2.New()
-	q.Enqueue(root)
-	for q.Empty() == false {
-		root = q.Dequeue().(*TreeNode)
-		root.Left, root.Right = root.Right, root.Left
-		if root.Left != nil {
-			q.Enqueue(root.Left)
+	cur := root
+	q := make([]*TreeNode, 0)
+	q = append(q, cur)
+	for len(q) > 0 {
+		cur = q[0]
+		q = q[1:]
+		cur.Left, cur.Right = cur.Right, cur.Left
+		if cur.Left != nil {
+			q = append(q, cur.Left)
 		}
-		if root.Right != nil {
-			q.Enqueue(root.Right)
+		if cur.Right != nil {
+			q = append(q, cur.Right)
 		}
 	}
 	return root
 }
+
+
 
 func Construct(In, Pre []int) *TreeNode { // inorder and preorder
 	var ch func(lo, hi, plo, phi int)  *TreeNode
@@ -608,6 +613,44 @@ func LCA(root, p, q *TreeNode) *TreeNode{
 	return left
 }
 
+func isCompleteTree(root *TreeNode) bool {
+	q := make([]*TreeNode, 0)
+	q = append(q, root)
+	for q[0] != nil {
+		t := q[0]
+		q = q[1:]
+		q = append(q, t.Left)
+		q = append(q, t.Right)
+	}
+
+	for len(q) > 0 && q[0] == nil {
+		q = q[1:]
+	}
+	return len(q) == 0
+}
+
+func maxPathSum(root *TreeNode) int {
+	maxValue := math.MinInt32
+
+	var helper func(node *TreeNode) int
+	helper = func(node *TreeNode) int{
+		if node == nil {
+			return 0
+		}
+		l := max(0, helper(node.Left))
+		r := max(0, helper(node.Right))
+		maxValue = max(maxValue, l + r + node.Val)
+		return node.Val + max(l, r)
+	}
+	helper(root)
+	return maxValue
+}
+
+
+func IsFull(root *TreeNode) bool {
+	return root == nil ||
+		root != nil && IsFull(root.Left) && IsFull(root.Right) && calDepth(root.Left) == calDepth(root.Right)
+}
 
 func main() {
 	//t := Tree{}

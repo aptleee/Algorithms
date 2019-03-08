@@ -6,8 +6,8 @@ func bfs(G graph, source int){
 	marked := make([]int, G.V)
 	edgeTo := make([]int, G.V)
 	q = append(q, source)
+	marked[source] = 1
 	for len(q) > 0 {
-		marked[source] = 1
 		x := q[0]
 		q = q[1:]
 		for _, w := range G.adj[x] {
