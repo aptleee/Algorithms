@@ -1,4 +1,4 @@
-package main
+package greedy
 
 type TreeNode struct {
 	Left, Right *TreeNode
