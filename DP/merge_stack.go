@@ -1,6 +1,5 @@
 package DP
 
-import "math"
 
 type T struct {
 	i int
@@ -27,7 +26,7 @@ func q3(A []int) int {
 		if v, ok := m[T{i, j }]; ok {
 			return v
 		}
-		Min := math.MaxInt32
+		Min := (1 << 31) - 1
 		if i == j {
 			return 0
 		}
