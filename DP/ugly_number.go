@@ -1,4 +1,4 @@
-package main
+package DP
 
 func nthUglyNumber(n int) int {
 
@@ -21,11 +21,4 @@ func nthUglyNumber(n int) int {
 	}
 	return res[len(res)-1]
 
-}
-
-func min(i, j int) int {
-	if i < j{
-		return i
-	}
-	return j
 }

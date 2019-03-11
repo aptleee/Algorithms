@@ -1,4 +1,4 @@
-package leetcode
+package DP
 
 
 func numDistinct1(s string, t string) int {
