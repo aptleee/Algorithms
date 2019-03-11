@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 type node struct {
 	key int
 	parent, left, right *node
@@ -12,7 +10,6 @@ func preorder(root *node) {
 	for root != nil {
 		if prev == root.parent { // going down, prefer left than right, maintain prev, if root has neither left
 					// nor right child, than go up to its parent
-			fmt.Print(root.key, " ")
 			prev = root
 			switch {
 			case root.left != nil:

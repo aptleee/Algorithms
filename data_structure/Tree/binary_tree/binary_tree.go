@@ -87,6 +87,21 @@ func InOderv2(root *TreeNode) {
 	}
 }
 
+func in(root *TreeNode) {
+	st := make([]*TreeNode, 0)
+	cur := root
+	for cur != nil || len(st) > 0 {
+		for cur != nil {
+			st = append(st, cur)
+			cur = cur.Left
+		}
+		l := len(st)-1
+		t := st[l]
+		st = st[:l]
+		fmt.Println(t.Val)
+		cur = t.Right
+	}
+}
 
 func PreOrder(root *TreeNode) {
 	if root != nil {
@@ -214,28 +229,6 @@ func LevelOrderv2(root *TreeNode) [][]int {
 	}
 	return res
 }
-
-func Levels(root *TreeNode) int {
-	q := make([]*TreeNode, 0)
-	q = append(q, root)
-	level := 0
-	for len(q) > 0 {
-		m := len(q)
-		for i := 0; i < m; i++ {
-			n := q[0]
-			q = q[1:]
-			if n.Left != nil {
-				q = append(q, n.Left)
-			}
-			if n.Right != nil {
-				q = append(q, n.Right)
-			}
-		}
-		level++
-	}
-	return level
-}
-
 
 
 func LevelOrderv3(root *TreeNode) [][]int {
@@ -377,11 +370,10 @@ func invertTree(root *TreeNode) *TreeNode {
 	if root == nil {
 		return nil
 	}
-	cur := root
 	q := make([]*TreeNode, 0)
-	q = append(q, cur)
+	q = append(q, root)
 	for len(q) > 0 {
-		cur = q[0]
+		cur := q[0]
 		q = q[1:]
 		cur.Left, cur.Right = cur.Right, cur.Left
 		if cur.Left != nil {
@@ -613,7 +605,7 @@ func LCA(root, p, q *TreeNode) *TreeNode{
 	return left
 }
 
-func isCompleteTree(root *TreeNode) bool {
+func isComplete(root *TreeNode) bool {
 	q := make([]*TreeNode, 0)
 	q = append(q, root)
 	for q[0] != nil {

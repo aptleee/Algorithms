@@ -33,12 +33,6 @@ func minDistance2(word1 string, word2 string) int {
 	return helper(word1, word2)
 }
 
-func min(i, j int) int {
-	if i < j{
-		return i
-	}
-	return j
-}
 
 func minDistance3(word1 string, word2 string) int {
 	if word1 == word2 {
