@@ -1,34 +1,36 @@
 package sync
 
 import (
-"fmt"
-"sync"
-"time"
+	"fmt"
+	"sync"
+	"time"
 )
 
-var locker = new(sync.Mutex)
-var cond = sync.NewCond(locker)
-
+var locker = sync.Mutex{}
+var cond = sync.NewCond(&locker)
+var buf = make([]int, 40)
 func main() {
 	for i := 0; i < 40; i++ {
 		go func(x int) {
 			cond.L.Lock()
 			defer cond.L.Unlock()
-			cond.Wait() // release the Lock and acquire lock when be signaled
-			fmt.Println(x)
+			for buf[x] == 0 {
+				cond.Wait()
+			}
+			fmt.Println(x, buf[x])
 			time.Sleep(time.Second * 1)
 
 		}(i)
 	}
-	time.Sleep(time.Second * 1)
-	fmt.Println("Signal...")
-	cond.Signal()
-	time.Sleep(time.Second * 1)
-	cond.Signal()
-	time.Sleep(time.Second * 3)
-	cond.Broadcast()
-	fmt.Println("Broadcast...")
-	time.Sleep(time.Second * 60)
+	for i := 0; i < 40; i++ {
+		time.Sleep(time.Second * 1)
+		cond.L.Lock()
+		buf[i] = 2000+i
+		//fmt.Println("buf[", i, "]", buf[i])
+		cond.Signal()
+		cond.L.Unlock()
+	}
+
 }
 
 //type Cond struct {
