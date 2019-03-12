@@ -32,17 +32,6 @@ func New() *SkipList {
 	}
 }
 
-//if next().val < cur.val {
-//	cur = cur.next[level]
-//} else if next().val == cur.val {
-// 	return cur
-//} else {
-//	level++
-//	cur = cur.next[level]
-//}
-//
-
-
 func (s *SkipList) Set(value string) {
 	level := 0
 	for ; rand.Int31n(2) == 1 && level < maxHight; level++ {
@@ -74,7 +63,6 @@ func (s *SkipList) Get(value string) *SkipListNode{
 	cur := s.head
 	i := s.height
 	for cur != nil {
-
 		for i >= 0 {
 			if cur.next[i] == nil {
 				i--

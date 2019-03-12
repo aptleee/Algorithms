@@ -3,7 +3,6 @@ package main
 import (
 	"Algorithms/data_structure/queue/queuev2"
 	"Algorithms/data_structure/stack/stackv2"
-	"container/list"
 	"fmt"
 	"math"
 	"strconv"
@@ -113,19 +112,7 @@ func PreOrder(root *TreeNode) {
 }
 
 
-func PreOrderv2(root *TreeNode) {
-	st := stackv2.New()
-	cur := root
-	for cur != nil || st.Empty() == false {
-		for cur != nil {
-			fmt.Print(cur.Val, " ")
-			st.Push(cur)
-			cur = cur.Left
-		}
-		a := st.Pop().(*TreeNode)
-		cur = a.Right
-	}
-}
+
 
 func PreOrderv3(root *TreeNode) []int {
 	ret := []int{}
@@ -357,34 +344,6 @@ func abs(a int) int {
 	}
 }
 
-func Invert(root *TreeNode) *TreeNode{
-
-	if root == nil {
-		return nil
-	}
-	root.Left, root.Right = Invert(root.Right), Invert(root.Left)
-	return root
-}
-
-func invertTree(root *TreeNode) *TreeNode {
-	if root == nil {
-		return nil
-	}
-	q := make([]*TreeNode, 0)
-	q = append(q, root)
-	for len(q) > 0 {
-		cur := q[0]
-		q = q[1:]
-		cur.Left, cur.Right = cur.Right, cur.Left
-		if cur.Left != nil {
-			q = append(q, cur.Left)
-		}
-		if cur.Right != nil {
-			q = append(q, cur.Right)
-		}
-	}
-	return root
-}
 
 
 
@@ -435,50 +394,7 @@ func buildTree(preorder []int, inorder []int) *TreeNode { // inorder and preorde
 	return root
 }
 
-func getPost(preorder []int, inorder []int) []int {
-	ret := make([]int, 0)
-	var helper func(preorder []int, inorder []int)
-	helper = func(preorder []int, inorder []int) {
-		if len(preorder) <= 0 {
-			return
-		}
-		target := preorder[0]
-		idx := findv2(inorder, target)
-		helper(preorder[1:idx+1], inorder[:idx])
-		helper(preorder[idx+1:], inorder[idx+1:])
-		ret = append(ret, target)
-	}
-	helper(preorder, inorder)
-	return ret
-}
 
-
-func buildTreev2(preorder []int, inorder []int) *TreeNode {
-	if len(preorder) == 0 {
-		return nil
-	}
-	root := &TreeNode{preorder[0], nil, nil}
-	stack := list.New()
-	stack.PushBack(root)
-	for p, i := 1, 0; p < len(preorder); {
-		top := stack.Back().Value.(*TreeNode)
-		if top.Val != inorder[i] {
-			top.Left = &TreeNode{preorder[p], nil, nil}
-			p++
-			stack.PushBack(top.Left)
-		} else {
-			stack.Remove(stack.Back())
-			i++
-			if stack.Len() > 0 && stack.Back().Value.(*TreeNode).Val == inorder[i] {
-				continue
-			}
-			top.Right = &TreeNode{preorder[p], nil, nil}
-			p++
-			stack.PushBack(top.Right)
-		}
-	}
-	return root
-}
 
 func buildTreev3(inorder []int, postorder []int) *TreeNode { // inorder and postorder
 	if len(postorder) <= 0 {
@@ -493,45 +409,7 @@ func buildTreev3(inorder []int, postorder []int) *TreeNode { // inorder and post
 }
 
 
-func Serialize(root *TreeNode) string { // preorder
-	s := ""
-	var sh func(root *TreeNode)
-	sh = func(root *TreeNode) {
-		if root == nil {
-			s += "# "
-		} else {
-			s = s + strconv.Itoa(root.Val) + " "
-			sh(root.Left)
-			sh(root.Right)
-		}
-	}
-	sh(root)
-	return s
-}
 
-func Deserialize(s string) *TreeNode { // preorder
-	q := queuev2.New()
-	a := strings.Split(s, " ")
-	for _, e := range a {
-		q.Enqueue(e)
-	}
-	var dh func() *TreeNode
-	dh = func() *TreeNode{
-		if q.Empty() == true {
-			return nil
-		}
-		a := q.Dequeue().(string)
-		if a == "#" {
-			return nil
-		}
-		t,_ := strconv.Atoi(a)
-		root := NewNode(t)
-		root.Left = dh()
-		root.Right = dh()
-		return root
-	}
-	return dh()
-}
 
 
 func Serializev2(root *TreeNode) string { // levelorder
@@ -576,14 +454,65 @@ func Deserializev2(s string) *TreeNode { //levelorder
 	return root
 }
 
-func Copy(root *TreeNode) *TreeNode{
-	if root == nil {
-		return nil
+
+
+
+func getPost(preorder []int, inorder []int) []int {
+	ret := make([]int, 0)
+	var helper func(preorder []int, inorder []int)
+	helper = func(preorder []int, inorder []int) {
+		if len(preorder) <= 0 {
+			return
+		}
+		target := preorder[0]
+		idx := findv2(inorder, target)
+		helper(preorder[1:idx+1], inorder[:idx])
+		helper(preorder[idx+1:], inorder[idx+1:])
+		ret = append(ret, target)
 	}
-	r2 := NewNode(root.Val)
-	r2.Left = Copy(root.Left)
-	r2.Right = Copy(root.Right)
-	return r2
+	helper(preorder, inorder)
+	return ret
+}
+
+
+func Serialize(root *TreeNode) string { // preorder
+	s := ""
+	var sh func(root *TreeNode)
+	sh = func(root *TreeNode) {
+		if root == nil {
+			s += "# "
+		} else {
+			s = s + strconv.Itoa(root.Val) + " "
+			sh(root.Left)
+			sh(root.Right)
+		}
+	}
+	sh(root)
+	return s
+}
+
+func Deserialize(s string) *TreeNode { // preorder
+	q := queuev2.New()
+	a := strings.Split(s, " ")
+	for _, e := range a {
+		q.Enqueue(e)
+	}
+	var dh func() *TreeNode
+	dh = func() *TreeNode{
+		if q.Empty() == true {
+			return nil
+		}
+		a := q.Dequeue().(string)
+		if a == "#" {
+			return nil
+		}
+		t,_ := strconv.Atoi(a)
+		root := NewNode(t)
+		root.Left = dh()
+		root.Right = dh()
+		return root
+	}
+	return dh()
 }
 
 
@@ -644,49 +573,45 @@ func IsFull(root *TreeNode) bool {
 		root != nil && IsFull(root.Left) && IsFull(root.Right) && calDepth(root.Left) == calDepth(root.Right)
 }
 
-func main() {
-	//t := Tree{}
-	//t.root = NewNode(0)
-	//t.root.Left = NewNode(1)
-	//t.root.Right = NewNode(2)
-	//t.root.Left.Left = NewNode(3)
-	//t.root.Left.Right = NewNode(4)
-	//t.root.Right.Left = NewNode(5)
-	//t.root.Right.Right = NewNode(6)
-	//t.root.Right.Right.Right = NewNode(10)
-	//LevelOrder(t.root)
-	//fmt.Println()
-	//fmt.Println(Serializev2(t.root))
-	//a := Deserializev2(Serializev2(t.root))
-	//in := []int{9,3,15,20,7}
-	//pre := []int{3,9,20,15,7}
-	//a := Construct(in, pre)
-	//PreOrder(a)
-	//fmt.Println(Levels(a))
-	in := []int {4, 2, 5, 1, 3, 6}
-	pre := []int {1, 2, 4, 5, 3, 6}
-	fmt.Println(getPost(pre, in))
-	////fmt.Println("root1 is symmetric", IsSymmetric(root1))
-	//fmt.Println("is SameTree", SameTree(t.root, a))
-	////Invertv2(root1)
-	//fmt.Println("root1 is balanced", IsBalanced(root1))
-	//fmt.Println("is mirror", IsMirrorv2(root1, t.root) )
-	//fmt.Println("is SameTree", SameTree(t.root, root1))
-	////fmt.Println()
-	////PreOrder(t.root)
-	////fmt.Println()
-	////PreOrderv2(t.root)
-	////fmt.Println()
-	//fmt.Println(LevelOrderv2(t.root))
-	//fmt.Println(LevelOrderv3(root1))
-	////fmt.Println(ZigZagOrder(t.root))
+func Invert(root *TreeNode) *TreeNode{
 
-	//fmt.Print("\n")
-	//fmt.Println(t.Depth())
-	//fmt.Println(t.Mindepth())
-	//LevelOrder(t.root)
-	//fmt.Println()
-	//Invertv2(t.root)
-	//LevelOrder(t.root)
-	//fmt.Println()
+	if root == nil {
+		return nil
+	}
+	root.Left, root.Right = Invert(root.Right), Invert(root.Left)
+	return root
+}
+
+func invertTree(root *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
+	}
+	q := make([]*TreeNode, 0)
+	q = append(q, root)
+	for len(q) > 0 {
+		cur := q[0]
+		q = q[1:]
+		cur.Left, cur.Right = cur.Right, cur.Left
+		if cur.Left != nil {
+			q = append(q, cur.Left)
+		}
+		if cur.Right != nil {
+			q = append(q, cur.Right)
+		}
+	}
+	return root
+}
+
+func PreOrderv2(root *TreeNode) {
+	st := stackv2.New()
+	cur := root
+	for cur != nil || st.Empty() == false {
+		for cur != nil {
+			fmt.Print(cur.Val, " ")
+			st.Push(cur)
+			cur = cur.Left
+		}
+		a := st.Pop().(*TreeNode)
+		cur = a.Right
+	}
 }

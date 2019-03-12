@@ -30,6 +30,23 @@ func findKth(A, B []int, k int) int { // given two sorted slice and find the Kth
 }
 
 
+
+func Select(A []int, k int) int {
+	lo, hi := 0, len(A) - 1
+	for hi >= lo {
+		j := partition(A, lo, hi)
+		if j == k {
+			return A[k]
+		} else if j > k {
+			hi = j - 1
+		} else {
+			lo = j + 1
+		}
+	}
+	return A[k]
+
+}
+
 func main() {
 	A := []int{1, 2, 3, 8}
 	B := []int{5, 6, 7, 9}

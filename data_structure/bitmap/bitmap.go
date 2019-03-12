@@ -47,7 +47,3 @@ func (bmp *BitMap) ClearBit(pos int) {
 	bmp.words[idx] &= uint64(mask)
 }
 
-func main() {
-
-}
-

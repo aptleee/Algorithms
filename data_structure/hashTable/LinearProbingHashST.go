@@ -39,20 +39,6 @@ func (i myint) hash(M int) int {
 }
 
 
-func main() {
-	a := Newv1()
-	for i:=0; i < 11; i++ {
-		a.Put(myint(i), i)
-	}
-	a.Put(myint(41), 41)
-	fmt.Println(a)
-	for i := 11; i < 31; i++ {
-		a.Put(myint(i), i)
-	}
-	fmt.Println(a)
-	fmt.Println(a.Get(myint(41)))
-}
-
 
 func (lst *LinearProbingHashST) resize(M int) {
 	t := Newv2(M)
@@ -101,9 +87,8 @@ func (lst *LinearProbingHashST) contain(k hash) bool {
 	}
 	return false
 }
+
 func (lst *LinearProbingHashST) Delete(k hash) { // cannot just set the lst.Key[k.hash()] to nil, which will make the
-// elements after it unavailable, so we need to reinsert into the table all of the keys
-// in the cluster to the right of the deleted key
 	if lst.contain(k) == false {
 		return
 	}
@@ -128,5 +113,20 @@ func (lst *LinearProbingHashST) Delete(k hash) { // cannot just set the lst.Key[
 	if lst.N > 0 && lst.N == lst.M / 8 {
 		lst.resize(lst.M/2)
 	}
+}
+
+
+func main() {
+	a := Newv1()
+	for i:=0; i < 11; i++ {
+		a.Put(myint(i), i)
+	}
+	a.Put(myint(41), 41)
+	fmt.Println(a)
+	for i := 11; i < 31; i++ {
+		a.Put(myint(i), i)
+	}
+	fmt.Println(a)
+	fmt.Println(a.Get(myint(41)))
 }
 

@@ -11,7 +11,7 @@ type graph struct {
 
 func dfs(G graph) []int {
 	if findDirectedCycle(G) {
-		return
+		return []int{}
 	}
 	marked := make([]bool, G.V)
 	order := make([]int, 0)

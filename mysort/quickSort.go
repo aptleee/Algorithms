@@ -78,21 +78,6 @@ func QuickSort2(A []int, lo, hi int) {
 	}
 }
 
-func Select(A []int, k int) int {
-	lo, hi := 0, len(A) - 1
-	for hi >= lo {
-		j := partition(A, lo, hi)
-		if j == k {
-			return A[k]
-		} else if j > k {
-			hi = j - 1
-		} else {
-			lo = j + 1
-		}
-	}
-	return A[k]
-
-}
 
 func Shuffle(vals []int) {
 	r := rand.New(rand.NewSource(time.Now().Unix()))

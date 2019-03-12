@@ -330,27 +330,6 @@ func UniqueBSTv2(n int) []*node {
 	return generating(1, n)
 }
 
-func generating(start, end int) []*node {
-	res := []*node{}
-	if start > end {
-		res = append(res, nil)
-		return res
-	}
-
-	for i := start; i <= end; i++ { // take care of the border condition
-		l := generating(start, i-1)
-		r := generating(i+1, end)
-		for j := 0; j < len(l); j++ {
-			for k := 0; k < len(r); k++ {
-				root := newNode(i, 0, 0)
-				root.Left = l[j]
-				root.Right = r[k]
-				res = append(res, root)
-			}
-		}
-	}
-	return res
-}
 
 func levelorder(root *node) {
 	if root != nil {
@@ -470,9 +449,6 @@ func sumOfLeftLeaves(root *node) int {
 
 }
 
-//func serializev2(*node) []int { //postorder
-//
-//}
 
 func ValidatePreOrderOfBST(A []int) bool {
 	if len(A) == 0 {
@@ -492,46 +468,27 @@ func ValidatePreOrderOfBST(A []int) bool {
 	return true
 }
 
+func generating(start, end int) []*node {
+	res := make([]*node, 0)
+	if start > end {
+		res = append(res, nil)
+		return res
+	}
 
-
-
-func main() {
-	//t := &BST{nil}
-	//t.Insert(25, 1)
-	//t.Insert(20, 1)
-	//t.Insert(12, 1)
-	//t.Insert(22, 1)
-	//t.Insert(30, 1)
-	//t.Insert(11, 1)
-	//t.Insert(60, 1)
-	//fmt.Println(serialize(t.root))
-	//a := deserialize(serialize(t.root))
-	//preOrder(a)
-	//fmt.Println()
-	//preOrder(t.root)
-	s := "s s"
-	fmt.Println(s[:3])
-	//t.Search(10)
-	//t.Delete(10)
-	//t.Show()
-	//t.Search(10)
-	//fmt.Println(UniqueBST(3))
-	//for _, e := range UniqueBSTv2(3) {
-	//	levelorder(e)
-	//	fmt.Println()
-	//}
-	//t.root = bst_delete(t.root, 10)
-	//inorder(t.root)
-	//fmt.Print("\n")
-	//t.root = bst_delete(t.root, 30)
-	//inorder(t.root)
-	//fmt.Print("\n")
-	//t.root = bst_delete(t.root, 15)
-	//inorder(t.root)
-	//fmt.Print("\n")
-	//t.root = bst_delete(t.root, 20)
-	//inorder(t.root)
-	//fmt.Print("\n")
-	//fmt.Print(t.depth(), "\n")
+	for i := start; i <= end; i++ { // take care of the border condition
+		l := generating(start, i-1)
+		r := generating(i+1, end)
+		for j := 0; j < len(l); j++ {
+			for k := 0; k < len(r); k++ {
+				root := newNode(i, 0, 0)
+				root.Left = l[j]
+				root.Right = r[k]
+				res = append(res, root)
+			}
+		}
+	}
+	return res
 }
+
+
 
