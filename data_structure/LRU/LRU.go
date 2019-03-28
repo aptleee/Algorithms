@@ -68,6 +68,7 @@ func (lru *LRU) Put(key, value int) {
 	}
 
 }
+
 func (lru *LRU) removeLast() {
 	if lru.last.prev != nil {
 		lru.last.prev.next = nil

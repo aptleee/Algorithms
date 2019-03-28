@@ -5,10 +5,7 @@ package shortestPath
 // BellMan-Ford can be used for all situations
 
 
-//func relax(G Graph, e edge) {
-//	w := e.To()
-//	v := e.From()
-//
+//func relax(G Graph, v int) {
 //	for w := range G.adj(v) {
 //		if disTo[w] >= disTo[v] + e.weight {
 //			disTo[w] = disTo[v] + e.weight
@@ -21,7 +18,7 @@ package shortestPath
 
 //func dijkstra(G Graph, s int) {
 //	edgeTo := make([]int, G.V)
-//	pq := MinPQ(G.V);
+//	pq := MinPQ(G.V, 0);
 //	for i := 0; i < G.V; i++ {
 //		disTo[i] = math.MaxInt32
 //	}
