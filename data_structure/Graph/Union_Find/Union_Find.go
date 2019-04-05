@@ -1,4 +1,4 @@
-package unionFind
+package unionfind
 
 type UF struct {
 	count int

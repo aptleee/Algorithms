@@ -1,14 +1,14 @@
-package DP
+package main
+import "fmt"
 
-
-type T struct {
+type t struct {
 	i int
 	j int
 }
 
-func q3(A []int) int {
+func mergeStack1(A []int) int {
 	n := len(A)
-	m := make(map[T]int)
+	m := make(map[t]int)
 	val := make([][]int, n)
 	for i := 0; i < n; i++ {
 		val[i] = make([]int, n)
@@ -23,7 +23,7 @@ func q3(A []int) int {
 
 	var merge func(i, j int) int
 	merge = func(i, j int) int {
-		if v, ok := m[T{i, j }]; ok {
+		if v, ok := m[t{i, j }]; ok {
 			return v
 		}
 		Min := (1 << 31) - 1
@@ -44,10 +44,53 @@ func q3(A []int) int {
 			}
 			Min = min(Min, cur)
 		}
-		m[T{i, j}] = Min
+		m[t{i, j}] = Min
 		return Min
 	}
 	return merge(0, n-1)
+}
+
+// Algorithm:
+// dp[i][j] = val[i][j] + dp[i][k] + dp[k+1][j], k from i to j-1
+
+func mergeStack(A []int) int {
+	n := len(A)
+	val := make([][]int, n)
+	dp := make([][]int, n)
+	for i := range val {
+		val[i] = make([]int, n)
+		dp[i] = make([]int, n)
+		for j := range val[i] {
+			val[i][j] = sum(A, i, j)
+			if i == j {
+				dp[i][j] = 0
+			} else {
+				dp[i][j] = 1 << 30
+			}
+			
+		}
+	}
+	for l := 2; l <= n; l++ {
+		for i := 0; i < n-l+1; i++ {
+			j := i + l - 1
+			for k := i; k < j; k++ {
+				dp[i][j] = min(dp[i][j], val[i][j] + dp[i][k] + dp[k+1][j])
+			}
+		}
+	}
+	return dp[0][n-1]
+}
+
+func min(i, j int) int {
+	if i > j {
+		return j
+	}
+	return i
+}
+
+func main() {
+	A := []int{1,2,3,4,5,1,2,3,2,3,41,2222,1333,21,3,42,2,4,6}
+	fmt.Println(mergeStack(A), mergeStack1(A))
 }
 
 

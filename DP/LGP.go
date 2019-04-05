@@ -33,7 +33,6 @@ func LGP2(s string) int {
 	for l := 2; l < n; l++ {
 		for i := 0; i < n-l+1; i++ {
 			j := i+l-1
-
 			if s[i] == s[j] {
 				if l == 2 {
 					dp[i][j] = 2

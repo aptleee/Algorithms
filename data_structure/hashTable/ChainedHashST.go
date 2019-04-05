@@ -94,8 +94,9 @@ package hashTable
 // hash = (((day * R + month) % M) * R + year) % M
 // M = 31
 import (
-	"AlgorithmsGo-master/data_structure/linked_list"
 	"hash/fnv"
+
+	"Algorithms/data_structure/linked_list"
 )
 
 type chainedHashTable struct {
@@ -110,7 +111,6 @@ func New(M int) *chainedHashTable {
 		Table: make([]linkedlist.DoublyLinkedList, 31),
 	}
 }
-
 
 
 func (ta *chainedHashTable) resize(m int) {
