@@ -1,4 +1,4 @@
-package unionfind
+package uf
 
 type UF struct {
 	count int
@@ -25,6 +25,14 @@ func (u *UF) find(i int) int{
 		i = u.friends[i]
 	}
 	return i
+}
+
+// path compression
+func (u *UF) pcFind(i int) int {
+	if i != u.friends[i] {
+		u.friends[i] = u.pcFind(u.friends[i])
+	}
+	return u.friends[i]
 }
 
 func (u *UF) quickUnion(i, j int) { //quick union

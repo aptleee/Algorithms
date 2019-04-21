@@ -196,6 +196,28 @@ func sort(sl singlyLinkedList) singlyLinkedList {
 
 }
 
+func smerge(l1 singlyLinkedList, l2 singlyLinkedList) singlyLinkedList {
+	dummy := NewNode(0)
+	cur := dummy
+	for l1.head != nil && l2.head != nil {
+		if l1.head.val > l2.head.val {
+			cur.next = l2.head
+			l2.head = l2.head.next
+		} else {
+			cur.next = l1.head
+			l1.head = l1.head.next
+		}
+		cur = cur.next
+	}
+	if l1.head == nil {
+		cur.next = l2.head
+	}
+	if l2.head == nil {
+		cur.next = l1.head
+	}
+	return singlyLinkedList{dummy.next}
+}
+
 func (sl *singlyLinkedList) IsSorted() bool {
 	if sl.head == nil || sl.head.next == nil {
 		return true
@@ -262,27 +284,7 @@ func detectCycle(head *singlyLinkedNode) *singlyLinkedNode {
 }
 
 
-func smerge(l1 singlyLinkedList, l2 singlyLinkedList) singlyLinkedList {
-	dummy := NewNode(0)
-	cur := dummy
-	for l1.head != nil && l2.head != nil {
-		if l1.head.val > l2.head.val {
-			cur.next = l2.head
-			l2.head = l2.head.next
-		} else {
-			cur.next = l1.head
-			l1.head = l1.head.next
-		}
-		cur = cur.next
-	}
-	if l1.head == nil {
-		cur.next = l2.head
-	}
-	if l2.head == nil {
-		cur.next = l1.head
-	}
-	return singlyLinkedList{dummy.next}
-}
+
 
 func smergev2(h1 *singlyLinkedNode, h2 *singlyLinkedNode) *singlyLinkedNode {
 	if h1 == nil {

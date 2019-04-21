@@ -16,6 +16,11 @@ package shortestPath
 //	}
 //}
 
+
+// Source-sink shortest paths. Using Dijkstra's algorithm, but terminate the search as soon
+// as t comes off the priority queue
+
+// All pairs shortest path,
 //func dijkstra(G Graph, s int) {
 //	edgeTo := make([]int, G.V)
 //	pq := MinPQ(G.V, 0);
