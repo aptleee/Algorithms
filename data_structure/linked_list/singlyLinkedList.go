@@ -1,4 +1,4 @@
-package linkedlist
+package main
 
 import "fmt"
 
@@ -99,27 +99,6 @@ func (sl *singlyLinkedList) Count() int {
 }
 
 func (sl *singlyLinkedList) Delete(v int) {
-	n := sl.Search(v)
-	if n == nil {
-		fmt.Printf("not found %d", v)
-		fmt.Println()
-		return
-	}
-	if n.next != nil { // n is not the last node
-		n.val = n.next.val
-		n.next = n.next.next
-	} else { // only one node in sl
-		if n == sl.head {
-			sl.head = nil
-		} else { // find the node previous to the last node
-			var cur *singlyLinkedNode
-			for cur = sl.head; cur.next.next != nil; cur = cur.next {}
-			cur.next = nil
-		}
-	}
-}
-
-func (sl *singlyLinkedList) Deletev2(v int) {
 	dummy := NewNode(0)
 	dummy.next = sl.head
 	cur := dummy
@@ -132,6 +111,17 @@ func (sl *singlyLinkedList) Deletev2(v int) {
 	}
 	sl.head = dummy.next
 }
+
+func (sl *singlyLinkedList) remove(n *singlyLinkedNode) {
+	indirect := &sl.head
+
+	for (*indirect != n) {
+		indirect = &(*indirect).next
+	}
+	
+	*indirect = n.next
+}
+
 func (sl *singlyLinkedList) Reverse() {
 	cur := sl.head
 	var pre, t *singlyLinkedNode
@@ -175,10 +165,28 @@ func (sl *singlyLinkedList) Reversev3(m, n int) {
 }
 
 func (sl *singlyLinkedList) Display() {
-	for cur := sl.head; cur != nil; cur = cur.next {
-		fmt.Print(cur.val, " ")
+	cur := sl.head
+	for ; cur.next != nil; cur = cur.next {
+		fmt.Print(cur.val, "->")
 	}
+	fmt.Print(cur.val)
 	fmt.Println()
+}
+
+func findMid(head *singlyLinkedNode) *singlyLinkedNode {
+	slow, fast := head, head
+	for {
+		slow = slow.next
+		fast = fast.next
+		if fast.next == nil {
+			break
+		}
+		fast = fast.next
+		if fast.next == nil {
+			break
+		}
+	}
+	return slow
 }
 
 func sort(sl singlyLinkedList) singlyLinkedList {
@@ -193,7 +201,6 @@ func sort(sl singlyLinkedList) singlyLinkedList {
 	}
 	pre.next = nil
 	return smerge(sort(sl), sort(singlyLinkedList{slow}))
-
 }
 
 func smerge(l1 singlyLinkedList, l2 singlyLinkedList) singlyLinkedList {
@@ -283,9 +290,6 @@ func detectCycle(head *singlyLinkedNode) *singlyLinkedNode {
 	return nil
 }
 
-
-
-
 func smergev2(h1 *singlyLinkedNode, h2 *singlyLinkedNode) *singlyLinkedNode {
 	if h1 == nil {
 		return h2
@@ -300,33 +304,34 @@ func smergev2(h1 *singlyLinkedNode, h2 *singlyLinkedNode) *singlyLinkedNode {
 	h2.next = smergev2(h2.next, h1)
 	return h2
 }
-//func main() {
-//	ll := singlyLinkedList{}
-//
-//	ll.AddAtBeg(10)
-//	//ll.AddAtEnd(20)
-//	//ll.AddAtBeg(20)
-//	//ll.AddAtBeg(30)
-//	ll.AddAtEnd(40)
-//	//ll.AddAtBeg(50)
-//	//ll.Display()
-//	//ll.Delete(20)
-//	//ll.Display()
-//	ll.Deletev2(40)
-//	ll.Deletev2(10)
-//	ll.Display()
-//	//fmt.Println("sorted? ", ll.IsSorted())
-//	//fmt.Println("has cycle?", ll.IsCicular())
-//	////fmt.Println(ll.head.prev)
-//	////ll.Reverse()
-//	////ll.Display()
-//	//ll.Remove(20)
-//	//ll.Display()
-//	////ll.Reversev2(ll.head.next, ll.head.next.next.next)
-//	//ll.Reversev3(1, 4)
-//	//ll.Display()
-//	//ll = sort(ll)
-//	//ll.Display()
-//	//fmt.Println("sorted? ",ll.IsSorted())
-//
-//}
+func main() {
+	ll := singlyLinkedList{}
+
+	n1 := &singlyLinkedNode{nil, 1}
+	n2 := &singlyLinkedNode{nil, 2}
+	n3 := &singlyLinkedNode{nil, 3}
+	ll.head = n1
+	n1.next = n2
+	n2.next = n3
+	fmt.Println(findMid(ll.head).val)
+	ll.remove(ll.head)
+	ll.Display()
+	// //ll.Display()
+	// ll.Deletev2(40)
+	// ll.Deletev2(10)
+	// ll.Display()
+	// //fmt.Println("sorted? ", ll.IsSorted())
+	// //fmt.Println("has cycle?", ll.IsCicular())
+	// ////fmt.Println(ll.head.prev)
+	// ////ll.Reverse()
+	// ////ll.Display()
+	// //ll.Remove(20)
+	// //ll.Display()
+	// ////ll.Reversev2(ll.head.next, ll.head.next.next.next)
+	// //ll.Reversev3(1, 4)
+	// //ll.Display()
+	// //ll = sort(ll)
+	// //ll.Display()
+	// //fmt.Println("sorted? ",ll.IsSorted())
+
+}
