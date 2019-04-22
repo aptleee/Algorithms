@@ -544,10 +544,13 @@ func isComplete(root *TreeNode) bool {
 		q = append(q, t.Right)
 	}
 
-	for len(q) > 0 && q[0] == nil {
+	for len(q) > 0 {
+		if q[0] != nil {
+			return false
+		}
 		q = q[1:]
 	}
-	return len(q) == 0
+	return true
 }
 
 func maxPathSum(root *TreeNode) int {
