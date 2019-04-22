@@ -1,4 +1,4 @@
-package linkedlist
+package linkedList
 
 import (
 	"fmt"
@@ -41,6 +41,7 @@ func (dl *DoublyLinkedList) Search(k interface{}) *doublyLinkedNode{
 	}
 	return cur
 }
+
 
 func (dl *DoublyLinkedList) Delete(k interface{}) {
 	n := dl.Search(k)
