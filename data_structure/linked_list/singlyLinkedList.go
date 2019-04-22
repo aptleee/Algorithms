@@ -122,6 +122,8 @@ func (sl *singlyLinkedList) remove(n *singlyLinkedNode) {
 	*indirect = n.next
 }
 
+
+
 func (sl *singlyLinkedList) Reverse() {
 	cur := sl.head
 	var pre, t *singlyLinkedNode
@@ -276,7 +278,7 @@ func detectCycle(head *singlyLinkedNode) *singlyLinkedNode {
 		return nil
 	}
 	entry, slow, fast := head, head, head
-	for fast == nil || fast.next == nil {
+	for fast != nil || fast.next != nil {
 		slow = slow.next
 		fast = fast.next.next
 		if slow == fast {
@@ -314,7 +316,7 @@ func main() {
 	n1.next = n2
 	n2.next = n3
 	fmt.Println(findMid(ll.head).val)
-	ll.remove(ll.head)
+	ll.remove(n2)
 	ll.Display()
 	// //ll.Display()
 	// ll.Deletev2(40)
