@@ -25,14 +25,14 @@ void rotate(T a[], int lo, int mid, int hi)
 }
 
 template <typename T>
-void mergeSort(T a[], int lo, int hi)
+void merge_sort(T a[], int lo, int hi)
 {
 	if (lo < hi)
 	{
 		int mid = lo + (hi - lo) / 2;
 		int i = lo, j = mid + 1;
-		mergeSort(a, lo, mid);
-		mergeSort(a, mid + 1, hi);
+		merge_sort(a, lo, mid);
+		merge_sort(a, mid + 1, hi);
 		while (i < j && j < hi + 1)
 		{
 			while (i < j && a[i] <= a[j])
@@ -55,7 +55,7 @@ int main()
 	int a[50] = {};
 	for (int k = 0; k < 50; k++)
 		a[k] = dist(rd);
-	mergeSort(a, 0, sizeof(a) / sizeof(a[0]));
+	merge_sort(a, 0, sizeof(a) / sizeof(a[0]));
 	for (int i : a)
 		std::cout << i << " ";
 	return 0;
